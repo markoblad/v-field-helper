@@ -1,0 +1,53 @@
+{
+  "name": "v-field-helper",
+  "version": "0.0.1",
+  "description": "interface and helpers for data inputs and json structures",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --reporter spec",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markoblad/v-field-helper.git"
+  },
+  "keywords": [
+    "v-field-helper",
+    "interface",
+    "helpers",
+    "data",
+    "inputs",
+    "json",
+    "structures",
+    "valcu"
+  ],
+  "author": "Mark Oblad <moblad@valcu.co> (https://twitter.com/markoblad)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/markoblad/v-field-helper/issues"
+  },
+  "homepage": "https://github.com/markoblad/v-field-helper#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.92",
+    "@types/moment": "^2.13.0",
+    "@types/pluralize": "0.0.28",
+    "@types/underscore.string": "0.0.32",
+    "lodash": "^4.17.4",
+    "moment": "^2.20.1",
+    "pluralize": "^7.0.0",
+    "text-mask-addons": "^3.7.1",
+    "underscore.string": "^3.3.4",
+    "v-tools": "0.0.9"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.1.0",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2",
+    "v-tools": "0.0.8"
+  }
+}
