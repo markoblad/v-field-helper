@@ -374,23 +374,30 @@ export class VFieldHelper {
   public static buildGeneratedNames(
     input: string | number,
     changes?: VFieldInterface,
-    options?: {question?: boolean, percent?: boolean}
+    options?: {question?: boolean, percent?: boolean, percent_threshold?: boolean}
   ): VFieldInterface {
     options = _.defaults(options || {}, {});
     changes = _.defaults(changes || {}, {});
     let name: string, label: string, terseLabel: string, hint: string;
-    name = (changes.input_name || input).toString();
+    name = VTools.makeString(changes.input_name || input);
     if (options.question) {
       name = name.replace(/^(?:ha|i)s\_/g, '');
     }
     if (options.percent) {
       name = name.replace(/(\b|_)perc(?:ent)?(?:age)?(\b|_)/ig, '_percentage_').replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_');
     }
+    if (options.percent_threshold) {
+      name = name.replace(/\_threshold\_perc(?:ent)?/ig, '').replace(/\_percent/ig, '').replace(/percent\_/ig, '').replace(/\_perc/ig, '')
+      .replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_') + '_percent';
+    }
     label = VFieldHelper.fieldToLabel(name, true);
     hint = VFieldHelper.fieldToLabel(name, false);
     if (options.question) {
       label += '?';
       hint += '?';
+    }
+    if (options.percent_threshold) {
+      hint += '. 50 is interpreted as "a majority".';
     }
     terseLabel = label;
     if (options.percent) {
@@ -409,6 +416,10 @@ export class VFieldHelper {
 
   public static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface {
     return VFieldHelper.buildGeneratedNames(input, changes, {percent: true});
+  }
+
+  public static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface {
+    return VFieldHelper.buildGeneratedNames(input, changes, {percent_threshold: true});
   }
 
   public static buildBase(
@@ -612,7 +623,6 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseDollarInteger('dollar_amount'));
   }
 
-
   public static buildGeneratedDollarInteger(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseDollarInteger(input, {hint: null})).value();
@@ -655,7 +665,6 @@ export class VFieldHelper {
     }).defaults(VFieldHelper.buildBaseDollarDecimal(input, {hint: null})).value();
   }
 
-
   public static buildBasePercent(input: string | number, changes?: VFieldInterface) {
     return _.chain(changes || {}).defaults({
       field_type: 'percent',
@@ -675,6 +684,11 @@ export class VFieldHelper {
 
   public static buildPercent(changes = {}) {
     return VFieldHelper.buildBasePercent('percent', changes);
+  }
+
+  public static buildGeneratedPercent(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+    return _.chain(changes || {}).defaults({
+    }).defaults(VFieldHelper.buildBasePercent(input, {hint: null})).value();
   }
 
   public static buildBaseDecimalPercent(input: string | number, changes?: VFieldInterface) {
@@ -705,71 +719,39 @@ export class VFieldHelper {
     .defaults(VFieldHelper.buildBaseDecimalPercent(input)).value();
   }
 
-  public static buildPercThreshold(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, {
-      input_name: 'perc_threshold',
-      display_name: 'Threshold Percent',
-      verbose_display_name: 'Threshold Percent',
-      terse_display_name: 'Threshold Percent',
-      label: 'Threshold Percent',
-      hint: 'Threshold Percent.  50 is interpreted as "a majority"',
-      default_visible: false,
-      fill_approach: 'manual',
-      manually_calculable: false,
-      as: 'string',
-      required: false,
-      input_html:  {class: 'add-on-percent inputmask-positive-decimal', data: {}},
+  public static buildBasePercentThreshold(input: string | number, changes?: VFieldInterface) {
+    return _.chain(changes || {}).defaults({
+      hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+      field_type: 'percent_threshold',
       placeholder: 'E.g., 50',
-      custom_input_size: '3',
+      type_cast: 'float',
+      input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+      custom_input_size: '2',
+      manually_calculable: false,
+      // sum_type: 'perc',
       sum_type: 'num',
       adjusted: false,
-      editable: true,
-      display: true,
       display_with: 'variable_integer',
-      ng_filter: 'variableInteger',
       use_formatters: true,
       formatters: 'percent_threshold',
       input_formatters: 'variable_integer',
-    });
+      ng_filter: 'variableInteger',
+      input_processors: ['string_to_decimal'],
+    }).defaults(VFieldHelper.buildGeneratedPercentThresholdNames(input))
+    .defaults(VFieldHelper.buildBase(input)).value();
   }
+  public static buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
 
-  public static buildGeneratedPercThreshold(input: string | number, changes?: VFieldInterface) {
-    changes = _.defaults(changes || {}, {});
-    let name = (changes.input_name || input || '').toString().toLowerCase()
-    .replace(/\_perc(?:ent)?\_threshold/ig, '');
-    return _.defaults(changes, VFieldHelper.buildPercThreshold({
-      required: false,
-      label: (name === 'perc_threshold' || (/\_hashed$/).test(name)) ?
-        'Percent Threshold' :
-        (VFieldHelper.fieldToLabel(name) + ' (Percent Threshold)'),
-      hint: (
-        (name === 'perc_threshold' || (/\_hashed$/).test(name)) ?
-        'Percent threshold' :
-        (VFieldHelper.fieldToLabel(name, false) + ' (percent threshold)')
-       ) + '.  50 is interpreted as "a majority"',
-      input_name: input.toString(),
-    }));
+  public static buildPercentThreshold(changes = {}) {
+    return VFieldHelper.buildBasePercentThreshold('percent_threshold', changes);
   }
+  public static buildPercThreshold = VFieldHelper.buildPercentThreshold;
 
-  public static buildGeneratedPercent(input: string | number, changes?: VFieldInterface) {
-    changes = _.defaults(changes || {}, {});
-    let name = (changes.input_name || input || '').toString().toLowerCase()
-    .replace(/\_threshold\_perc(?:ent)?/ig, '')
-    .replace(/\_percent/ig, '').replace(/\_perc/ig, '');
-    return _.defaults(changes, VFieldHelper.buildPercent({
-      required: false,
-      label: (
-        (_.includes(['threshold_perc', 'percent', 'perc'], name) || (/\_hashed$/).test(name)) ?
-        '' : VFieldHelper.fieldToLabel(name)
-      ) + ' Percent',
-      // hint: (
-      //   (_.includes(['threshold_perc', 'percent', 'perc'], name) || (/\_hashed$/).test(name)) ?
-      //   '' : VFieldHelper.fieldToLabel(name, false)
-      // ) + ' percent',
-      hint: null,
-      input_name: input.toString(),
-    }));
+  public static buildGeneratedPercentThreshold(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+    return _.chain(changes || {}).defaults({
+    }).defaults(VFieldHelper.buildBasePercentThreshold(input, {})).value();
   }
+  public static buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
 
   public static buildBaseBoolean(
     input: string | number,
@@ -909,7 +891,6 @@ export class VFieldHelper {
     }));
   }
 
-
   public static buildBaseAcState(input: string | number, changes?: VFieldInterface): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'state_or_place',
@@ -976,7 +957,6 @@ export class VFieldHelper {
   public static buildPeriodType(changes?: VFieldInterface): VFieldInterface {
     return VFieldHelper.buildBasePeriodType('period_type', changes);
   }
-
 
   public static buildGeneratedAcState(input: string, changes?: VFieldInterface): VFieldInterface {
     return _.defaults(
@@ -1108,18 +1088,12 @@ export class VFieldHelper {
 // [['United States', 'US']]))
 // end
 
-
-
 //   public static buildBase_select(input, changes = {})
 //     buildBase(input).merge(
 //       placeholder: nil,
 //       as: nil,
 //     ).merge(changes)
 //   end
-
-
-
-
 
 //   public static build_yes_checkbox(changes = {})
 //     buildBase_boolean(:yes_checkbox, {
@@ -1227,4 +1201,3 @@ export class VFieldHelper {
 //       js_formatters: 'provisions',
 //     ).merge(changes)
 //   end
-

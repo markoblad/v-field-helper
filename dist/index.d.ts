@@ -68,8 +68,10 @@ export declare class VFieldHelper {
     static buildGeneratedNames(input: string | number, changes?: VFieldInterface, options?: {
         question?: boolean;
         percent?: boolean;
+        percent_threshold?: boolean;
     }): VFieldInterface;
     static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildBase(input?: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildBaseString(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildString(changes?: VFieldInterface): VFieldInterface;
@@ -123,6 +125,7 @@ export declare class VFieldHelper {
         ng_filter: string;
         input_processors: string[];
     };
+    static buildGeneratedPercent(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildBaseDecimalPercent(input: string | number, changes?: VFieldInterface): VFieldInterface & {
         field_type: string;
         placeholder: string;
@@ -205,9 +208,8 @@ export declare class VFieldHelper {
         editable: boolean;
         adjusted: boolean;
     };
-    static buildPercThreshold(changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedPercThreshold(input: string | number, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedPercent(input: string | number, changes?: VFieldInterface): VFieldInterface & {
+    static buildBasePercentThreshold(input: string | number, changes?: VFieldInterface): VFieldInterface & {
+        hint: string;
         field_type: string;
         placeholder: string;
         type_cast: string;
@@ -215,7 +217,9 @@ export declare class VFieldHelper {
             class: string;
         };
         custom_input_size: string;
+        manually_calculable: boolean;
         sum_type: string;
+        adjusted: boolean;
         display_with: string;
         use_formatters: boolean;
         formatters: string;
@@ -223,6 +227,29 @@ export declare class VFieldHelper {
         ng_filter: string;
         input_processors: string[];
     };
+    static buildBasePercThreshold: typeof VFieldHelper.buildBasePercentThreshold;
+    static buildPercentThreshold(changes?: {}): VFieldInterface & {
+        hint: string;
+        field_type: string;
+        placeholder: string;
+        type_cast: string;
+        input_html: {
+            class: string;
+        };
+        custom_input_size: string;
+        manually_calculable: boolean;
+        sum_type: string;
+        adjusted: boolean;
+        display_with: string;
+        use_formatters: boolean;
+        formatters: string;
+        input_formatters: string;
+        ng_filter: string;
+        input_processors: string[];
+    };
+    static buildPercThreshold: typeof VFieldHelper.buildPercentThreshold;
+    static buildGeneratedPercentThreshold(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedPercThreshold: typeof VFieldHelper.buildGeneratedPercentThreshold;
     static buildBaseBoolean(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildApplicability(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedApplicability(input: string, changes?: VFieldInterface): VFieldInterface;

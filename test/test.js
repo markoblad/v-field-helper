@@ -175,6 +175,32 @@ describe('VFieldHelper functions test', () => {
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
+  it('should return buildGeneratedPercentThresholdNames for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPercentThresholdNames('purchaser_threshold_perc', null),
+      VFieldHelper.buildGeneratedPercentThresholdNames('purchaser_threshold_perc_voting', null),
+    ];
+    var expectation = [
+      {
+        input_name: 'purchaser_threshold_perc',
+        label: 'Purchaser Percent',
+        display_name: 'Purchaser Percent',
+        terse_display_name: 'Purchaser Percent',
+        hint: 'Purchaser percent. 50 is interpreted as "a majority".',
+        required: false
+      },
+      {
+        input_name: 'purchaser_threshold_perc_voting',
+        label: 'Purchaser Voting Percent',
+        display_name: 'Purchaser Voting Percent',
+        terse_display_name: 'Purchaser Voting Percent',
+        hint: 'Purchaser voting percent. 50 is interpreted as "a majority".',
+        required: false
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
   it('should return buildBase for various', () => {
     var result = [
       VFieldHelper.buildBase('purchaser'),
@@ -292,7 +318,945 @@ describe('VFieldHelper functions test', () => {
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
+  it('should return buildTextarea', () => {
+    var result = [
+      VFieldHelper.buildTextarea(),
+    ];
+    var expectation = [
+      {
+        field_type: 'textarea',
+        placeholder: 'Type detail_',
+        as: 'text',
+        input_html: {rows: '5'},
+        custom_input_size: '4',
+        default_visible: false,
 
+        input_name: 'detail',
+        custom_input_size: '4',
+        label: 'Detail',
+        display_name: 'Detail',
+        terse_display_name: 'Detail',
+        hint: 'Detail',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedTextarea', () => {
+    var result = [
+      VFieldHelper.buildGeneratedTextarea('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'textarea',
+        placeholder: 'Type detail_',
+        as: 'text',
+        input_html: {rows: '5'},
+        custom_input_size: '4',
+        default_visible: false,
 
+        input_name: 'purchaser',
+        custom_input_size: '4',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePositiveInteger', () => {
+    var result = [
+      VFieldHelper.buildBasePositiveInteger('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'positive_integer',
+        placeholder: 'E.g., 1,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-integer inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'num',
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        js_formatters: 'variableInteger',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildPositiveInteger', () => {
+    var result = [
+      VFieldHelper.buildPositiveInteger(),
+    ];
+    var expectation = [
+      {
+        field_type: 'positive_integer',
+        placeholder: 'E.g., 1,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-integer inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'num',
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        js_formatters: 'variableInteger',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+        input_name: 'number',
+        label: 'Number',
+        display_name: 'Number',
+        terse_display_name: 'Number',
+        hint: 'Number',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedPositiveInteger', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPositiveInteger('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'positive_integer',
+        placeholder: 'E.g., 1,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-integer inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'num',
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        js_formatters: 'variableInteger',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildBasePositiveVariableInteger', () => {
+    var result = [
+      VFieldHelper.buildBasePositiveVariableInteger('purchaser'),
+    ];
+    var expectation = [
+      {
+        type_cast: 'float',
+        input_html: {class: 'add-on-decimal inputmask-positive-decimal'},
+        input_processors: ['string_to_decimal'],
+        field_type: 'positive_integer',
+        placeholder: 'E.g., 1,000',
+        custom_input_size: '3',
+        sum_type: 'num',
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        js_formatters: 'variableInteger',
+        input_formatters: 'variable_integer',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePositiveDecimal', () => {
+    var result = [
+      VFieldHelper.buildBasePositiveDecimal('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'positive_decimal',
+        placeholder: 'E.g., 0.00001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-decimal inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dec',
+        display_with: 'variable_decimal',
+        ng_filter: 'variableDecimal',
+        use_formatters: true,
+        formatters: 'variable_decimal',
+        input_formatters: 'variable_decimal',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildPositiveDecimal', () => {
+    var result = [
+      VFieldHelper.buildPositiveDecimal(),
+    ];
+    var expectation = [
+      {
+        field_type: 'positive_decimal',
+        placeholder: 'E.g., 0.00001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-decimal inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dec',
+        display_with: 'variable_decimal',
+        ng_filter: 'variableDecimal',
+        use_formatters: true,
+        formatters: 'variable_decimal',
+        input_formatters: 'variable_decimal',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'precise_number',
+        label: 'Precise Number',
+        display_name: 'Precise Number',
+        terse_display_name: 'Precise Number',
+        hint: 'Precise number',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedPositiveDecimal', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPositiveDecimal('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'positive_decimal',
+        placeholder: 'E.g., 0.00001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-decimal inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dec',
+        display_with: 'variable_decimal',
+        ng_filter: 'variableDecimal',
+        use_formatters: true,
+        formatters: 'variable_decimal',
+        input_formatters: 'variable_decimal',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseDollarInteger', () => {
+    var result = [
+      VFieldHelper.buildBaseDollarInteger('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'dollar_integer',
+        placeholder: 'E.g., 40,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-dollar inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'currency_integer',
+        use_formatters: true,
+        formatters: 'currency_integer',
+        ng_filter: 'currency:$:0',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDollarInteger', () => {
+    var result = [
+      VFieldHelper.buildDollarInteger(),
+    ];
+    var expectation = [
+      {
+        field_type: 'dollar_integer',
+        placeholder: 'E.g., 40,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-dollar inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'currency_integer',
+        use_formatters: true,
+        formatters: 'currency_integer',
+        ng_filter: 'currency:$:0',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+
+        // js_formatters: '',
+        input_name: 'dollar_amount',
+        label: 'Dollar Amount',
+        display_name: 'Dollar Amount',
+        terse_display_name: 'Dollar Amount',
+        hint: 'Dollar amount',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildGeneratedDollarInteger', () => {
+    var result = [
+      VFieldHelper.buildGeneratedDollarInteger('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'dollar_integer',
+        placeholder: 'E.g., 40,000',
+        type_cast: 'integer',
+        input_html: {class: 'add-on-dollar inputmask-positive-integer'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'currency_integer',
+        use_formatters: true,
+        formatters: 'currency_integer',
+        ng_filter: 'currency:$:0',
+        input_formatters: 'variable_integer',
+        input_processors: ['string_to_integer'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseDollarDecimal', () => {
+    var result = [
+      VFieldHelper.buildBaseDollarDecimal('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'dollar_precise_decimal',
+        placeholder: 'E.g., 0.0001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-dollar inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'variable_currency',
+        use_formatters: true,
+        formatters: 'variable_currency',
+        ng_filter: 'currency',
+        js_formatters: 'variableCurrency',
+        input_formatters: ['string_to_decimal', 'variable_decimal'],
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePreciseDollarDecimal', () => {
+    var result = [
+      VFieldHelper.buildBasePreciseDollarDecimal('purchaser'),
+    ];
+    var expectation = [
+      {
+        ng_filter: 'variableCurrency',
+        field_type: 'dollar_precise_decimal',
+        placeholder: 'E.g., 0.0001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-dollar inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'variable_currency',
+        use_formatters: true,
+        formatters: 'variable_currency',
+        js_formatters: 'variableCurrency',
+        input_formatters: ['string_to_decimal', 'variable_decimal'],
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDollarDecimal', () => {
+    var result = [
+      VFieldHelper.buildDollarDecimal(),
+    ];
+    var expectation = [
+      {
+        field_type: 'dollar_precise_decimal',
+        placeholder: 'E.g., 0.0001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-dollar inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'variable_currency',
+        use_formatters: true,
+        formatters: 'variable_currency',
+        ng_filter: 'currency',
+        js_formatters: 'variableCurrency',
+        input_formatters: ['string_to_decimal', 'variable_decimal'],
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'cents_dollar_amount',
+        label: 'Cents Dollar Amount',
+        display_name: 'Cents Dollar Amount',
+        terse_display_name: 'Cents Dollar Amount',
+        hint: 'Cents dollar amount',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedDollarDecimal', () => {
+    var result = [
+      VFieldHelper.buildGeneratedDollarDecimal('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'dollar_precise_decimal',
+        placeholder: 'E.g., 0.0001',
+        type_cast: 'float',
+        input_html: {class: 'add-on-dollar inputmask-positive-decimal'},
+        custom_input_size: '3',
+        sum_type: 'dol',
+        display_with: 'variable_currency',
+        use_formatters: true,
+        formatters: 'variable_currency',
+        ng_filter: 'currency',
+        js_formatters: 'variableCurrency',
+        input_formatters: ['string_to_decimal', 'variable_decimal'],
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePercent', () => {
+    var result = [
+      VFieldHelper.buildBasePercent('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'percent',
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        sum_type: 'perc',
+        display_with: 'perc_to_perc_str',
+        use_formatters: true,
+        formatters: 'perc_to_perc_str',
+        input_formatters: 'decimal_to_str',
+        ng_filter: 'percentage:3',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildPercent', () => {
+    var result = [
+      VFieldHelper.buildPercent(),
+    ];
+    var expectation = [
+      {
+        field_type: 'percent',
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        sum_type: 'perc',
+        display_with: 'perc_to_perc_str',
+        use_formatters: true,
+        formatters: 'perc_to_perc_str',
+        input_formatters: 'decimal_to_str',
+        ng_filter: 'percentage:3',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'percent',
+        label: 'Percent',
+        display_name: 'Percent',
+        terse_display_name: 'Percent',
+        hint: 'Percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedPercent', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPercent('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'percent',
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        sum_type: 'perc',
+        display_with: 'perc_to_perc_str',
+        use_formatters: true,
+        formatters: 'perc_to_perc_str',
+        input_formatters: 'decimal_to_str',
+        ng_filter: 'percentage:3',
+        input_processors: ['string_to_decimal'],
+
+        // js_formatters: '',
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildBaseDecimalPercent', () => {
+    var result = [
+      VFieldHelper.buildBaseDecimalPercent('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'percent_threshold',
+        sum_type: 'perc',
+        display_with: 'decimal_to_perc_str',
+        formatters: 'decimal_to_perc_str',
+        // input_formatters: 'decimal_to_perc_str',
+        input_formatters: 'decimal_to_perc',
+        input_processors: ['string_to_decimal', 'perc_to_decimal'],
+        js_formatters: 'decimalToPercStr',
+        jsInputProcessors: 'percToDecimal',
+        ng_filter: 'decimalToPercStr',
+
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        use_formatters: true,
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDecimalPercent', () => {
+    var result = [
+      VFieldHelper.buildDecimalPercent(),
+    ];
+    var expectation = [
+      {
+        field_type: 'percent_threshold',
+        sum_type: 'perc',
+        display_with: 'decimal_to_perc_str',
+        formatters: 'decimal_to_perc_str',
+        // input_formatters: 'decimal_to_perc_str',
+        input_formatters: 'decimal_to_perc',
+        input_processors: ['string_to_decimal', 'perc_to_decimal'],
+        js_formatters: 'decimalToPercStr',
+        jsInputProcessors: 'percToDecimal',
+        ng_filter: 'decimalToPercStr',
+
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        use_formatters: true,
+
+        input_name: 'decimal_percent',
+        label: 'Decimal Percent',
+        display_name: 'Decimal Percent',
+        terse_display_name: 'Decimal Percent',
+        hint: 'Decimal percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildCalculatedDecimalPercent', () => {
+    var result = [
+      VFieldHelper.buildCalculatedDecimalPercent('purchaser'),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'dynamic',
+        editable: false,
+        adjusted: true,
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+
+        field_type: 'percent_threshold',
+        sum_type: 'perc',
+        display_with: 'decimal_to_perc_str',
+        formatters: 'decimal_to_perc_str',
+        // input_formatters: 'decimal_to_perc_str',
+        input_formatters: 'decimal_to_perc',
+        input_processors: ['string_to_decimal', 'perc_to_decimal'],
+        js_formatters: 'decimalToPercStr',
+        jsInputProcessors: 'percToDecimal',
+        ng_filter: 'decimalToPercStr',
+
+        placeholder: 'E.g., 1.5',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        use_formatters: true,
+
+        as: 'string',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePercentThreshold', () => {
+    var result = [
+      VFieldHelper.buildBasePercentThreshold('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+        field_type: 'percent_threshold',
+        placeholder: 'E.g., 50',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        manually_calculable: false,
+        // sum_type: 'perc',
+        sum_type: 'num',
+        adjusted: false,
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'percent_threshold',
+        input_formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser Percent',
+        display_name: 'Purchaser Percent',
+        terse_display_name: 'Purchaser Percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePercentThreshold', () => {
+    var result = [
+      VFieldHelper.buildBasePercentThreshold('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+        field_type: 'percent_threshold',
+        placeholder: 'E.g., 50',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        manually_calculable: false,
+        // sum_type: 'perc',
+        sum_type: 'num',
+        adjusted: false,
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'percent_threshold',
+        input_formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser Percent',
+        display_name: 'Purchaser Percent',
+        terse_display_name: 'Purchaser Percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePercThreshold', () => {
+    var result = [
+      VFieldHelper.buildBasePercThreshold('purchaser').hint,
+    ];
+    var expectation = [
+      'Threshold Percent.  50 is interpreted as "a majority".',
+    ];
+    expect(result.toString()).to.equal(expectation.toString());
+  });
+  it('should return buildPercentThreshold', () => {
+    var result = [
+      VFieldHelper.buildPercentThreshold(),
+    ];
+    var expectation = [
+      {
+        hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+        field_type: 'percent_threshold',
+        placeholder: 'E.g., 50',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        manually_calculable: false,
+        // sum_type: 'perc',
+        sum_type: 'num',
+        adjusted: false,
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'percent_threshold',
+        input_formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'percent_threshold',
+        label: 'Threshold Percent',
+        display_name: 'Threshold Percent',
+        terse_display_name: 'Threshold Percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildPercentThreshold', () => {
+    var result = [
+      VFieldHelper.buildPercentThreshold().hint,
+    ];
+    var expectation = [
+      'Threshold Percent.  50 is interpreted as "a majority".',
+    ];
+    expect(result.toString()).to.equal(expectation.toString());
+  });
+  it('should return buildGeneratedPercentThreshold', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPercentThreshold('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+        field_type: 'percent_threshold',
+        placeholder: 'E.g., 50',
+        type_cast: 'float',
+        input_html: {class: 'add-on-percent inputmask-positive-decimal'},
+        custom_input_size: '2',
+        manually_calculable: false,
+        // sum_type: 'perc',
+        sum_type: 'num',
+        adjusted: false,
+        display_with: 'variable_integer',
+        use_formatters: true,
+        formatters: 'percent_threshold',
+        input_formatters: 'variable_integer',
+        ng_filter: 'variableInteger',
+        input_processors: ['string_to_decimal'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser Percent',
+        display_name: 'Purchaser Percent',
+        terse_display_name: 'Purchaser Percent',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedPercThreshold', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPercThreshold('purchaser').hint,
+    ];
+    var expectation = [
+      'Threshold Percent.  50 is interpreted as "a majority".',
+    ];
+    expect(result.toString()).to.equal(expectation.toString());
+  });
 
 });

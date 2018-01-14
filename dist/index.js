@@ -7,6 +7,8 @@ const moment = require("moment");
 const v_tools_1 = require("v-tools");
 const createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
 class VFieldHelper {
+    constructor() {
+    }
     static get positiveDecimalMask() {
         return createNumberMask_1.default({
             prefix: '',
@@ -310,18 +312,25 @@ class VFieldHelper {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
         let name, label, terseLabel, hint;
-        name = (changes.input_name || input).toString();
+        name = v_tools_1.VTools.makeString(changes.input_name || input);
         if (options.question) {
             name = name.replace(/^(?:ha|i)s\_/g, '');
         }
         if (options.percent) {
             name = name.replace(/(\b|_)perc(?:ent)?(?:age)?(\b|_)/ig, '_percentage_').replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_');
         }
+        if (options.percent_threshold) {
+            name = name.replace(/\_threshold\_perc(?:ent)?/ig, '').replace(/\_percent/ig, '').replace(/percent\_/ig, '').replace(/\_perc/ig, '')
+                .replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_') + '_percent';
+        }
         label = VFieldHelper.fieldToLabel(name, true);
         hint = VFieldHelper.fieldToLabel(name, false);
         if (options.question) {
             label += '?';
             hint += '?';
+        }
+        if (options.percent_threshold) {
+            hint += '. 50 is interpreted as "a majority".';
         }
         terseLabel = label;
         if (options.percent) {
@@ -338,6 +347,9 @@ class VFieldHelper {
     }
     static buildGeneratedPercentNames(input, changes) {
         return VFieldHelper.buildGeneratedNames(input, changes, { percent: true });
+    }
+    static buildGeneratedPercentThresholdNames(input, changes) {
+        return VFieldHelper.buildGeneratedNames(input, changes, { percent_threshold: true });
     }
     static buildBase(input, changes, options) {
         options = _.defaults(options || {}, {});
@@ -529,6 +541,9 @@ class VFieldHelper {
     static buildPercent(changes = {}) {
         return VFieldHelper.buildBasePercent('percent', changes);
     }
+    static buildGeneratedPercent(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePercent(input, { hint: null })).value();
+    }
     static buildBaseDecimalPercent(input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'percent_threshold',
@@ -554,64 +569,32 @@ class VFieldHelper {
         }).defaults(VFieldHelper.buildGeneratedPercentNames(input))
             .defaults(VFieldHelper.buildBaseDecimalPercent(input)).value();
     }
-    static buildPercThreshold(changes) {
-        return _.defaults(changes || {}, {
-            input_name: 'perc_threshold',
-            display_name: 'Threshold Percent',
-            verbose_display_name: 'Threshold Percent',
-            terse_display_name: 'Threshold Percent',
-            label: 'Threshold Percent',
-            hint: 'Threshold Percent.  50 is interpreted as "a majority"',
-            default_visible: false,
-            fill_approach: 'manual',
-            manually_calculable: false,
-            as: 'string',
-            required: false,
-            input_html: { class: 'add-on-percent inputmask-positive-decimal', data: {} },
+    static buildBasePercentThreshold(input, changes) {
+        return _.chain(changes || {}).defaults({
+            hint: 'Threshold Percent.  50 is interpreted as "a majority".',
+            field_type: 'percent_threshold',
             placeholder: 'E.g., 50',
-            custom_input_size: '3',
+            type_cast: 'float',
+            input_html: { class: 'add-on-percent inputmask-positive-decimal' },
+            custom_input_size: '2',
+            manually_calculable: false,
+            // sum_type: 'perc',
             sum_type: 'num',
             adjusted: false,
-            editable: true,
-            display: true,
             display_with: 'variable_integer',
-            ng_filter: 'variableInteger',
             use_formatters: true,
             formatters: 'percent_threshold',
             input_formatters: 'variable_integer',
-        });
+            ng_filter: 'variableInteger',
+            input_processors: ['string_to_decimal'],
+        }).defaults(VFieldHelper.buildGeneratedPercentThresholdNames(input))
+            .defaults(VFieldHelper.buildBase(input)).value();
     }
-    static buildGeneratedPercThreshold(input, changes) {
-        changes = _.defaults(changes || {}, {});
-        let name = (changes.input_name || input || '').toString().toLowerCase()
-            .replace(/\_perc(?:ent)?\_threshold/ig, '');
-        return _.defaults(changes, VFieldHelper.buildPercThreshold({
-            required: false,
-            label: (name === 'perc_threshold' || (/\_hashed$/).test(name)) ?
-                'Percent Threshold' :
-                (VFieldHelper.fieldToLabel(name) + ' (Percent Threshold)'),
-            hint: ((name === 'perc_threshold' || (/\_hashed$/).test(name)) ?
-                'Percent threshold' :
-                (VFieldHelper.fieldToLabel(name, false) + ' (percent threshold)')) + '.  50 is interpreted as "a majority"',
-            input_name: input.toString(),
-        }));
+    static buildPercentThreshold(changes = {}) {
+        return VFieldHelper.buildBasePercentThreshold('percent_threshold', changes);
     }
-    static buildGeneratedPercent(input, changes) {
-        changes = _.defaults(changes || {}, {});
-        let name = (changes.input_name || input || '').toString().toLowerCase()
-            .replace(/\_threshold\_perc(?:ent)?/ig, '')
-            .replace(/\_percent/ig, '').replace(/\_perc/ig, '');
-        return _.defaults(changes, VFieldHelper.buildPercent({
-            required: false,
-            label: ((_.includes(['threshold_perc', 'percent', 'perc'], name) || (/\_hashed$/).test(name)) ?
-                '' : VFieldHelper.fieldToLabel(name)) + ' Percent',
-            // hint: (
-            //   (_.includes(['threshold_perc', 'percent', 'perc'], name) || (/\_hashed$/).test(name)) ?
-            //   '' : VFieldHelper.fieldToLabel(name, false)
-            // ) + ' percent',
-            hint: null,
-            input_name: input.toString(),
-        }));
+    static buildGeneratedPercentThreshold(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePercentThreshold(input, {})).value();
     }
     static buildBaseBoolean(input, changes, options) {
         options = _.defaults(options || {}, {
@@ -879,9 +862,10 @@ class VFieldHelper {
         }, fieldHelp);
         return fieldHelp;
     }
-    constructor() {
-    }
 }
+VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
+VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
+VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
 exports.VFieldHelper = VFieldHelper;
 // public static get_default_country_collection(opts={})
 //   ([['United States', 'US']] +
