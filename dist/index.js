@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 const s = require("underscore.string");
 const pluralize = require("pluralize");
-const moment = require("moment");
 const v_tools_1 = require("v-tools");
 const createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
 class VFieldHelper {
@@ -308,21 +307,49 @@ class VFieldHelper {
         }
         return fieldHelp;
     }
+    static setAltDependencies(fieldHelp, altDependencies, altDependencyValues) {
+        fieldHelp = fieldHelp || {};
+        let inputHtml = fieldHelp.input_html || {};
+        let inputHtmlClass = ((inputHtml.class || '') + ' isDependent').trim();
+        inputHtml.class = inputHtmlClass;
+        let inputHTMLData = inputHtml.data || {};
+        inputHTMLData = _.defaults({
+            alt_dependencies: altDependencies,
+            alt_dependency_values: altDependencyValues
+        }, inputHTMLData);
+        inputHtml.data = inputHTMLData;
+        // TODO handle ruby alt-dependencies
+        fieldHelp = _.defaults({
+            input_html: inputHtml,
+            alt_dependencies: altDependencies,
+            alt_dependency_values: altDependencyValues
+        }, fieldHelp);
+        return fieldHelp;
+    }
     static buildGeneratedNames(input, changes, options) {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
         let name, label, terseLabel, hint;
         name = v_tools_1.VTools.makeString(changes.input_name || input);
         if (options.question) {
-            name = name.replace(/^(?:ha|i)s\_/g, '');
+            name = name.replace(/^(?:ha|i)s\_/g, '')
+                .replace(/\_else\_applicability/ig, '')
+                .replace(/\_applicability/ig, '');
         }
         if (options.percent) {
-            name = name.replace(/(\b|_)perc(?:ent)?(?:age)?(\b|_)/ig, '_percentage_').replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_');
+            name = name.replace(/(\b|_)perc(?:ent)?(?:age)?(\b|_)/ig, '_percentage_');
         }
         if (options.percent_threshold) {
-            name = name.replace(/\_threshold\_perc(?:ent)?/ig, '').replace(/\_percent/ig, '').replace(/percent\_/ig, '').replace(/\_perc/ig, '')
-                .replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_') + '_percent';
+            name = name.replace(/\_threshold\_perc(?:ent)?/ig, '').replace(/\_percent/ig, '')
+                .replace(/percent\_/ig, '').replace(/\_perc/ig, '') + '_percent';
         }
+        if (options.organization_state) {
+            name = name.replace(/\_?org(?:anization|anisation)\_state/ig, '_organization_state');
+        }
+        if (options.v_sig) {
+            name += ' Signature';
+        }
+        name = name.replace(/(?:^_+)|(?:_+$)/g, '').replace(/_+/, '_');
         label = VFieldHelper.fieldToLabel(name, true);
         hint = VFieldHelper.fieldToLabel(name, false);
         if (options.question) {
@@ -613,30 +640,19 @@ class VFieldHelper {
             input_processors: ['is_true'],
         }, VFieldHelper.buildBase(input, {}, options)));
     }
-    static buildApplicability(changes) {
+    static buildBaseApplicability(input, changes, options) {
         return _.chain(changes).defaults({ field_type: 'applicability' })
-            .defaults(VFieldHelper.buildBaseBoolean('applicability')).value();
+            .defaults(VFieldHelper.buildBaseBoolean(input)).value();
     }
-    static buildGeneratedApplicability(input, changes) {
-        changes = changes || {};
-        let name = (changes.input_name || input).toString().replace(/\_applicability/ig, '');
-        return _.defaults(changes, VFieldHelper.buildApplicability({
-            label: `${VFieldHelper.fieldToLabel(name)}?`,
-            // hint: `Is ${VFieldHelper.fieldToLabel(name, false).toLowerCase()} applicable?`,
-            hint: null,
-            input_name: input.toString(),
-        }));
+    static buildApplicability(changes) {
+        return _.chain(changes)
+            .defaults(VFieldHelper.buildBaseApplicability('applicability')).value();
     }
-    static buildGeneratedElseApplicability(input, changes) {
-        changes = changes || {};
-        let name = (changes.input_name || input).toString()
-            .replace(/\_else\_applicability/ig, '');
-        return _.chain(changes || {}).defaults({
-            label: `${VFieldHelper.fieldToLabel(name)}?`,
-            // hint: 'Is #{VFieldHelper.fieldToLabel(name, false).downcase} applicable?',
-            hint: null,
-            input_name: input.toString(),
-        }).defaults(VFieldHelper.buildApplicability()).value();
+    static buildGeneratedApplicability(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseApplicability(input, { hint: null })).value();
+    }
+    static buildGeneratedElseApplicability(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseApplicability(input, { hint: null })).value();
     }
     static buildFormCopy(changes = {}) {
         return _.chain(changes || {}).defaults({
@@ -661,8 +677,8 @@ class VFieldHelper {
     static buildBaseDatepicker(input, changes) {
         return _.defaults(changes, _.defaults({
             field_type: 'date',
-            hint: 'Select the date',
-            placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
+            // placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
+            placeholder: 'YYYY-MM-DD',
             type_cast: 'date',
             input_html: {
                 class: 'col-sm-3 no-default-date inputmask-date',
@@ -679,40 +695,33 @@ class VFieldHelper {
     static buildGeneratedDate(input, changes) {
         let name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
         return _.defaults(changes, VFieldHelper.buildBaseDatepicker(input.toString(), {
-            label: name === 'date' ? 'Date' : (VFieldHelper.fieldToLabel(name) + ' Date'),
-            hint: null,
+            // label: name === 'date' ? 'Date' : (VFieldHelper.fieldToLabel(name) + ' Date'),
+            hint: 'Select the date',
         }));
     }
-    static buildOrgState(changes) {
-        return _.defaults(changes || {}, {
+    static buildBaseOrgState(input, changes) {
+        return _.chain(changes || {}).defaults({
             field_type: 'organization_state',
-            hint: 'State where company incorporated / organized',
-            label: 'Company Incorporation / Organization State',
-            fill_approach: 'dynamic',
-            input_name: 'org_state',
-            required: false,
-            as: 'string',
+            fill_approach: 'manual',
             input_html: { class: 'acOrgState' },
-            placeholder: 'Select or Type State',
             custom_input_size: '2',
             display: false,
             display_with: 'state',
             use_formatters: true,
             formatters: 'state',
-        });
+        }).defaults(VFieldHelper.buildBase(input)).value();
     }
-    static buildGeneratedOrgState(input, changes) {
-        changes = changes || {};
-        let name = (changes.input_name || input || '').toString().replace(/\_org\_state/ig, '');
-        return _.defaults(changes, VFieldHelper.buildOrgState({
-            label: (name === 'org_state' ? 'Company' : VFieldHelper.fieldToLabel(name)) +
-                ' Incorporation / Organization State',
-            hint: 'State where ' +
-                (name === 'org_state' ? 'Company' : VFieldHelper.fieldToLabel(name, false)) +
-                ' incorporated / organized',
-            input_name: input.toString(),
-            fill_approach: 'manual',
-        }));
+    static buildOrgState(changes) {
+        return _.chain(changes)
+            .defaults(VFieldHelper.buildBaseOrgState('org_state', {
+            fill_approach: 'dynamic',
+            label: 'Company Incorporation / Organization State',
+            hint: 'State where company incorporated / organized',
+            placeholder: 'Select or Type State',
+        })).value();
+    }
+    static buildGeneratedOrgState(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseOrgState(input, {})).value();
     }
     static buildBaseAcState(input, changes) {
         return _.chain(changes || {}).defaults({
@@ -729,7 +738,10 @@ class VFieldHelper {
     static buildAcState(changes) {
         return VFieldHelper.buildBaseAcState('state_or_place', changes);
     }
-    static buildBaseAcOrgType(input, changes = {}) {
+    static buildGeneratedAcState(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcState(input, {})).value();
+    }
+    static buildBaseAcOrgType(input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'entity_type',
             placeholder: 'Select or Type Entity Type',
@@ -742,6 +754,9 @@ class VFieldHelper {
     }
     static buildAcOrgType(changes) {
         return VFieldHelper.buildBaseAcOrgType('entity_or_org_type', changes);
+    }
+    static buildGeneratedACOrgType(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcOrgType(input, { hint: null })).value();
     }
     static buildBaseAcSecurityName(input, changes) {
         return _.chain(changes || {}).defaults({
@@ -758,6 +773,9 @@ class VFieldHelper {
     static buildAcSecurityName(changes) {
         return VFieldHelper.buildBaseAcSecurityName('security_name', changes);
     }
+    static buildGeneratedAcSecurityName(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcSecurityName(input, {})).value();
+    }
     static buildBasePeriodType(input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'period_type',
@@ -773,34 +791,15 @@ class VFieldHelper {
     static buildPeriodType(changes) {
         return VFieldHelper.buildBasePeriodType('period_type', changes);
     }
-    static buildGeneratedAcState(input, changes) {
-        return _.defaults(changes || {}, VFieldHelper.buildAcState(VFieldHelper.buildGeneratedNames(input, { hint: null })));
-    }
-    static buildGeneratedOrgType(input, changes) {
-        return _.defaults(changes || {}, VFieldHelper.buildAcOrgType(VFieldHelper.buildGeneratedNames(input, { hint: null })));
-    }
-    static buildGeneratedPeriodType(input, changes) {
-        changes = changes || {};
-        let name = (changes.input_name || input || '').toString().replace(/\_org\_state/ig, '');
-        return _.defaults(changes, VFieldHelper.buildPeriodType({
-            label: VFieldHelper.fieldToLabel(name),
-            // hint: VFieldHelper.fieldToLabel(name, false),
-            hint: null,
-            input_name: input.toString(),
-        }));
+    static buildGeneratedPeriodType(input, changes = {}) {
+        return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePeriodType(input, { hint: null })).value();
     }
     static buildGeneratedVSig(input, changes) {
-        changes = changes || {};
-        let name = (changes.input_name || input || '').toString();
-        return _.defaults(changes, VFieldHelper.buildString({
+        return _.chain(changes || {}).defaults({
             field_type: 'v_sig',
-            label: `${VFieldHelper.fieldToLabel(name)} Signature`,
-            // hint: `Signature for ${VFieldHelper.fieldToLabel(name, false)}`,
-            hint: null,
-            input_name: input.toString(),
             fill_approach: 'dynamic',
             display: false,
-        }));
+        }).defaults(VFieldHelper.buildBase(input)).value();
     }
     static buildBaseObjectHashes(input, changes) {
         return _.chain(changes || {}).defaults({
@@ -817,55 +816,38 @@ class VFieldHelper {
     static buildGeneratedObjectHashes(input, changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseObjectHashes(input, { hint: null }));
     }
-    static buildVirtualModelHashes(changes = {}) {
-        return _.defaults(changes || {}, {
+    static buildBaseVirtualModelHashes(input, changes) {
+        return _.chain(changes || {}).defaults({
             field_type: 'hashes',
-            hint: 'Carefully complete the inputs to model this attribute.',
-            label: 'Virtual Model',
             fill_approach: 'virtual_model',
-            input_name: 'virtual_model_hashes',
-            required: false,
             as: 'text',
-            display: true,
             display_with: 'hashes_to_lines',
             use_formatters: true,
+        }).defaults(VFieldHelper.buildBase(input)).value();
+    }
+    static buildVirtualModelHashes(changes) {
+        return VFieldHelper.buildBaseVirtualModelHashes('virtual_model_hashes', {
+            label: 'Virtual Model',
+            hint: 'Carefully complete the inputs to model this attribute.',
         });
     }
     static buildGeneratedVirtualModelHashes(input, changes) {
         return _.chain(changes || {}).defaults({
             fill_approach: 'generated_virtual_model'
-        }).defaults(VFieldHelper.buildGeneratedNames(input))
-            .defaults(VFieldHelper.buildVirtualModelHashes()).value();
+        })
+            .defaults(VFieldHelper.buildBaseVirtualModelHashes(input, changes)).value();
     }
     static buildHashesSummedBase(input, changes) {
         return _.chain(changes).defaults({
             fill_approach: 'dynamic',
-            display: true
-        }).defaults(VFieldHelper.buildGeneratedNames(input, {})).value();
-    }
-    static setAltDependencies(fieldHelp, altDependencies, altDependencyValues) {
-        fieldHelp = fieldHelp || {};
-        let inputHtml = fieldHelp.input_html || {};
-        let inputHtmlClass = ((inputHtml.class || '') + ' isDependent').trim();
-        inputHtml.class = inputHtmlClass;
-        let inputHTMLData = inputHtml.data || {};
-        inputHTMLData = _.defaults({
-            alt_dependencies: altDependencies,
-            alt_dependency_values: altDependencyValues
-        }, inputHTMLData);
-        inputHtml.data = inputHTMLData;
-        // TODO handle ruby alt-dependencies
-        fieldHelp = _.defaults({
-            input_html: inputHtml,
-            alt_dependencies: altDependencies,
-            alt_dependency_values: altDependencyValues
-        }, fieldHelp);
-        return fieldHelp;
+            editable: false,
+        }).defaults(VFieldHelper.buildBase(input)).value();
     }
 }
 VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
 VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
 VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
+VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
 exports.VFieldHelper = VFieldHelper;
 // public static get_default_country_collection(opts={})
 //   ([['United States', 'US']] +

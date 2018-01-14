@@ -65,10 +65,13 @@ export declare class VFieldHelper {
     static addDataAttsToFieldHelp(fieldHelp: VFieldInterface, dataAttsHash: {
         v_field_type?: string;
     }, options?: {}): VFieldInterface;
+    static setAltDependencies(fieldHelp: VFieldInterface, altDependencies: any, altDependencyValues: any): VFieldInterface;
     static buildGeneratedNames(input: string | number, changes?: VFieldInterface, options?: {
         question?: boolean;
         percent?: boolean;
         percent_threshold?: boolean;
+        organization_state?: boolean;
+        v_sig?: boolean;
     }): VFieldInterface;
     static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
@@ -251,43 +254,37 @@ export declare class VFieldHelper {
     static buildGeneratedPercentThreshold(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedPercThreshold: typeof VFieldHelper.buildGeneratedPercentThreshold;
     static buildBaseBoolean(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
+    static buildBaseApplicability(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildApplicability(changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedApplicability(input: string, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedElseApplicability(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedApplicability(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedElseApplicability(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildFormCopy(changes?: VFieldInterface): VFieldInterface;
     static buildAnnotatedCopy(changes?: VFieldInterface): VFieldInterface;
     static buildBaseDatepicker(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedDate(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildBaseOrgState(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildOrgState(changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedOrgState(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedOrgState(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildBaseAcState(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildAcState(changes?: VFieldInterface): VFieldInterface;
-    static buildBaseAcOrgType(input: string | number, changes?: {}): VFieldInterface & {
-        field_type: string;
-        placeholder: string;
-        input_html: {
-            class: string;
-        };
-        custom_input_size: string;
-        display_with: string;
-        use_formatters: boolean;
-        formatters: string;
-    };
+    static buildGeneratedAcState(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildBaseAcOrgType(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildAcOrgType(changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedACOrgType(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedOrgType: typeof VFieldHelper.buildGeneratedACOrgType;
     static buildBaseAcSecurityName(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildAcSecurityName(changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedAcSecurityName(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildBasePeriodType(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildPeriodType(changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedAcState(input: string, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedOrgType(input: string, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedPeriodType(input: string, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedVSig(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedPeriodType(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildGeneratedVSig(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildBaseObjectHashes(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildObjectHashes(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedObjectHashes(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildBaseVirtualModelHashes(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildVirtualModelHashes(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedVirtualModelHashes(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildHashesSummedBase(input: string, changes?: VFieldInterface): VFieldInterface;
-    static setAltDependencies(fieldHelp: VFieldInterface, altDependencies: any, altDependencyValues: any): VFieldInterface;
     constructor();
 }

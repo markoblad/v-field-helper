@@ -89,6 +89,23 @@ describe('VFieldHelper functions test', () => {
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
+  it('should return setAltDependencies for various', () => {
+    var result = [
+      VFieldHelper.setAltDependencies({input_html: {data: {some_att: 'empty'}}}).input_html.data.alt_dependencies,
+      VFieldHelper.setAltDependencies({input_html: {data: {some_att: 'empty'}}}).input_html.data.alt_dependency_values,
+      VFieldHelper.setAltDependencies({input_html: {data: {some_att: 'empty'}}}, ['some_field', 'some_other_field'], [true, 'value']).input_html.data.alt_dependencies,
+      VFieldHelper.setAltDependencies({input_html: {data: {some_att: 'empty'}}}, ['some_field', 'some_other_field'], [true, 'value']).input_html.data.alt_dependency_values,
+      VFieldHelper.setAltDependencies({input_html: {data: {some_att: 'empty'}}}).input_html['class'],
+    ];
+    var expectation = [
+      null,
+      null,
+      ['some_field', 'some_other_field'],
+      [true, 'value'],
+      'isDependent',
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
   it('should return buildGeneratedNames for various', () => {
     var result = [
       VFieldHelper.buildGeneratedNames('purchaser'),
@@ -1257,6 +1274,939 @@ describe('VFieldHelper functions test', () => {
       'Threshold Percent.  50 is interpreted as "a majority".',
     ];
     expect(result.toString()).to.equal(expectation.toString());
+  });
+  it('should return buildBaseBoolean for various', () => {
+    var result = [
+      VFieldHelper.buildBaseBoolean('purchaser'),
+    ];
+    var expectation = [
+      {
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser?',
+        display_name: 'Purchaser?',
+        terse_display_name: 'Purchaser?',
+        hint: 'Purchaser?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseApplicability for various', () => {
+    var result = [
+      VFieldHelper.buildBaseApplicability('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'applicability',
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser?',
+        display_name: 'Purchaser?',
+        terse_display_name: 'Purchaser?',
+        hint: 'Purchaser?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });  
+  it('should return buildApplicability for various', () => {
+    var result = [
+      VFieldHelper.buildApplicability(),
+    ];
+    var expectation = [
+      {
+        field_type: 'applicability',
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        input_name: 'applicability',
+        label: 'Applicability?',
+        display_name: 'Applicability?',
+        terse_display_name: 'Applicability?',
+        hint: 'Applicability?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedApplicability for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedApplicability('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'applicability',
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser?',
+        display_name: 'Purchaser?',
+        terse_display_name: 'Purchaser?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildGeneratedApplicability for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedApplicability('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'applicability',
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser?',
+        display_name: 'Purchaser?',
+        terse_display_name: 'Purchaser?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildFormCopy for various', () => {
+    var result = [
+      VFieldHelper.buildFormCopy(),
+    ];
+    var expectation = [
+      {
+        field_type: 'form_copy',
+        input_name: 'form_copy',
+        display_name: 'Form Copy?',
+        hint: 'Is this a form template to be downloaded and filled out later?',
+        label: 'Generate Form Only?',
+        readonly_v_asset_types: ['PostIncorporation'],
+        required: true,
+
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        terse_display_name: 'Applicability?',
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildAnnotatedCopy for various', () => {
+    var result = [
+      VFieldHelper.buildAnnotatedCopy(),
+    ];
+    var expectation = [
+      {
+        field_type: 'annotated_copy',
+        input_name: 'annotated_copy',
+        hint: 'Include annotations/comments in the generated document?',
+        label: 'Annotated Version?',
+        display_name: 'Annotated Version?',
+
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        formatters: 'is_true',
+        js_formatters: 'check',
+        input_processors: ['is_true'],
+
+        terse_display_name: 'Applicability?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseDatepicker for various', () => {
+    var result = [
+      VFieldHelper.buildBaseDatepicker('purchaser'),
+    ];
+    var expectation = [
+      {
+      field_type: 'date',
+      placeholder: 'YYYY-MM-DD',
+      type_cast: 'date',
+      input_html: {
+         class: 'col-sm-3 no-default-date inputmask-date',
+         data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}
+      },
+      custom_input_size: '3',
+      display_with: 'format_date',
+      use_formatters: true,
+      formatters: 'format_date',
+      ng_filter: 'date:mediumDate',
+      js_formatters: 'formatDate',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedDate for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedDate('purchaser'),
+    ];
+    var expectation = [
+      {
+      hint: 'Select the date',
+      field_type: 'date',
+      placeholder: 'YYYY-MM-DD',
+      type_cast: 'date',
+      input_html: {
+         class: 'col-sm-3 no-default-date inputmask-date',
+         data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}
+      },
+      custom_input_size: '3',
+      display_with: 'format_date',
+      use_formatters: true,
+      formatters: 'format_date',
+      ng_filter: 'date:mediumDate',
+      js_formatters: 'formatDate',
+      
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseOrgState for various', () => {
+    var result = [
+      VFieldHelper.buildBaseOrgState('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'organization_state',
+        fill_approach: 'manual',
+        input_html: {class: 'acOrgState'},
+        custom_input_size: '2',
+        display: false,
+        display_with: 'state',
+        use_formatters: true,
+        formatters: 'state',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildOrgState for various', () => {
+    var result = [
+      VFieldHelper.buildOrgState(),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'dynamic',
+        label: 'Company Incorporation / Organization State',
+        hint: 'State where company incorporated / organized',
+        placeholder: 'Select or Type State',
+
+        field_type: 'organization_state',
+        input_html: {class: 'acOrgState'},
+        custom_input_size: '2',
+        display: false,
+        display_with: 'state',
+        use_formatters: true,
+        formatters: 'state',
+        
+        input_name: 'org_state',
+        display_name: 'Org State',
+        terse_display_name: 'Org State',
+        required: false,
+        editable: true,
+        as: 'string',
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedOrgState for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedOrgState('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'organization_state',
+        fill_approach: 'manual',
+        input_html: {class: 'acOrgState'},
+        custom_input_size: '2',
+        display: false,
+        display_with: 'state',
+        use_formatters: true,
+        formatters: 'state',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseAcState for various', () => {
+    var result = [
+      VFieldHelper.buildBaseAcState('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'state_or_place',
+        placeholder: 'Select or Type State or Place',
+        input_html: {class: 'acAddressState'},
+        custom_input_size: '3',
+        display_with: 'state',
+        ng_filter: 'state',
+        use_formatters: true,
+        formatters: 'state',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildAcState for various', () => {
+    var result = [
+      VFieldHelper.buildAcState(),
+    ];
+    var expectation = [
+      {
+        field_type: 'state_or_place',
+        placeholder: 'Select or Type State or Place',
+        input_html: {class: 'acAddressState'},
+        custom_input_size: '3',
+        display_with: 'state',
+        ng_filter: 'state',
+        use_formatters: true,
+        formatters: 'state',
+      
+        input_name: 'state_or_place',
+        label: 'State Or Place',
+        display_name: 'State Or Place',
+        terse_display_name: 'State Or Place',
+        hint: 'State or place',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedAcState for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedAcState('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'state_or_place',
+        placeholder: 'Select or Type State or Place',
+        input_html: {class: 'acAddressState'},
+        custom_input_size: '3',
+        display_with: 'state',
+        ng_filter: 'state',
+        use_formatters: true,
+        formatters: 'state',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildBaseAcOrgType for various', () => {
+    var result = [
+      VFieldHelper.buildBaseAcOrgType('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'entity_type',
+        placeholder: 'Select or Type Entity Type',
+        input_html: {class: 'acOrgType'},
+        custom_input_size: '3',
+        display_with: 'entity_type',
+        use_formatters: true,
+        formatters: 'entity_type',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildAcOrgType for various', () => {
+    var result = [
+      VFieldHelper.buildAcOrgType(),
+    ];
+    var expectation = [
+      {
+        field_type: 'entity_type',
+        placeholder: 'Select or Type Entity Type',
+        input_html: {class: 'acOrgType'},
+        custom_input_size: '3',
+        display_with: 'entity_type',
+        use_formatters: true,
+        formatters: 'entity_type',
+
+        input_name: 'entity_or_org_type',
+        label: 'Entity Or Org Type',
+        display_name: 'Entity Or Org Type',
+        terse_display_name: 'Entity Or Org Type',
+        hint: 'Entity or org type',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+
+  it('should return buildGeneratedACOrgType for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedACOrgType('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'entity_type',
+        placeholder: 'Select or Type Entity Type',
+        input_html: {class: 'acOrgType'},
+        custom_input_size: '3',
+        display_with: 'entity_type',
+        use_formatters: true,
+        formatters: 'entity_type',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedOrgType', () => {
+    var result = [
+      VFieldHelper.buildGeneratedOrgType('purchaser').placeholder,
+    ];
+    var expectation = [
+      'Select or Type Entity Type',
+    ];
+    expect(result.toString()).to.equal(expectation.toString());
+  });
+  it('should return buildBaseAcSecurityName for various', () => {
+    var result = [
+      VFieldHelper.buildBaseAcSecurityName('purchaser'),
+    ];
+    var expectation = [
+      {
+      label: 'Security Name',
+      display_name: 'Security Name',
+      hint: 'Use the exact security name in the company\'s charter ' +
+        '(e.g., Series A Preferred Stock).',
+      placeholder: 'Start Typing Security Name',
+      custom_input_size: '3',
+      input_html: {class: 'acSecurityName'},
+
+        input_name: 'purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildAcSecurityName for various', () => {
+    var result = [
+      VFieldHelper.buildAcSecurityName(),
+    ];
+    var expectation = [
+      {
+      label: 'Security Name',
+      display_name: 'Security Name',
+      hint: 'Use the exact security name in the company\'s charter ' +
+        '(e.g., Series A Preferred Stock).',
+      placeholder: 'Start Typing Security Name',
+      custom_input_size: '3',
+      input_html: {class: 'acSecurityName'},
+      
+        input_name: 'security_name',
+        terse_display_name: 'Security Name',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedAcSecurityName for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedAcSecurityName('purchaser'),
+    ];
+    var expectation = [
+      {
+      label: 'Security Name',
+      display_name: 'Security Name',
+      hint: 'Use the exact security name in the company\'s charter ' +
+        '(e.g., Series A Preferred Stock).',
+      placeholder: 'Start Typing Security Name',
+      custom_input_size: '3',
+      input_html: {class: 'acSecurityName'},
+
+        input_name: 'purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBasePeriodType for various', () => {
+    var result = [
+      VFieldHelper.buildBasePeriodType('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'period_type',
+        placeholder: 'Select Period Type',
+        as: null,
+        other_input_options: {
+          collection: VTools.SINGULAR_PERIODS,
+          include_blank: 'Select Period Type'
+        },
+        custom_input_size: '3',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildPeriodType for various', () => {
+    var result = [
+      VFieldHelper.buildPeriodType(),
+    ];
+    var expectation = [
+      {
+        field_type: 'period_type',
+        placeholder: 'Select Period Type',
+        as: null,
+        other_input_options: {
+          collection: VTools.SINGULAR_PERIODS,
+          include_blank: 'Select Period Type'
+        },
+        custom_input_size: '3',
+
+        input_name: 'period_type',
+        label: 'Period Type',
+        display_name: 'Period Type',
+        terse_display_name: 'Period Type',
+        hint: 'Period type',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedPeriodType for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedPeriodType('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'period_type',
+        placeholder: 'Select Period Type',
+        as: null,
+        other_input_options: {
+          collection: VTools.SINGULAR_PERIODS,
+          include_blank: 'Select Period Type'
+        },
+        custom_input_size: '3',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedVSig for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedVSig('v_sig_purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'v_sig',
+        fill_approach: 'dynamic',
+        display: false,
+        input_name: 'v_sig_purchaser',
+        label: 'V Sig Purchaser',
+        display_name: 'V Sig Purchaser',
+        terse_display_name: 'V Sig Purchaser',
+        hint: 'V sig purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseObjectHashes for various', () => {
+    var result = [
+      VFieldHelper.buildBaseObjectHashes('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'hashes',
+        fill_approach: 'dynamic',
+        display_with: 'join_array_of_hashes_values',
+        use_formatters: true,
+        formatters: 'smart_array_of_hash_values',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildObjectHashes for various', () => {
+    var result = [
+      VFieldHelper.buildObjectHashes(),
+    ];
+    var expectation = [
+      {
+        field_type: 'hashes',
+        fill_approach: 'dynamic',
+        display_with: 'join_array_of_hashes_values',
+        use_formatters: true,
+        formatters: 'smart_array_of_hash_values',
+
+        input_name: 'object_hashes',
+        label: 'Objects',
+        display_name: 'Objects',
+        terse_display_name: 'Objects',
+        hint: 'Objects',
+        required: false,
+        editable: true,
+        as: 'string',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedObjectHashes for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedObjectHashes('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: null,
+        field_type: 'hashes',
+        fill_approach: 'dynamic',
+        display_with: 'join_array_of_hashes_values',
+        use_formatters: true,
+        formatters: 'smart_array_of_hash_values',
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseVirtualModelHashes for various', () => {
+    var result = [
+      VFieldHelper.buildBaseVirtualModelHashes('purchaser'),
+    ];
+    var expectation = [
+      {
+        field_type: 'hashes',
+        fill_approach: 'virtual_model',
+        as: 'text',
+        display_with: 'hashes_to_lines',
+        use_formatters: true,
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildVirtualModelHashes for various', () => {
+    var result = [
+      VFieldHelper.buildVirtualModelHashes(),
+    ];
+    var expectation = [
+      {
+        label: 'Virtual Model',
+        hint: 'Carefully complete the inputs to model this attribute.',
+        field_type: 'hashes',
+        fill_approach: 'virtual_model',
+        as: 'text',
+        display_with: 'hashes_to_lines',
+        use_formatters: true,
+      
+        input_name: 'virtual_model_hashes',
+        display_name: 'Virtual Models',
+        terse_display_name: 'Virtual Models',
+        required: false,
+        editable: true,
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildGeneratedVirtualModelHashes for various', () => {
+    var result = [
+      VFieldHelper.buildGeneratedVirtualModelHashes('purchaser'),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'generated_virtual_model',
+        field_type: 'hashes',
+        as: 'text',
+        display_with: 'hashes_to_lines',
+        use_formatters: true,
+      
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildHashesSummedBase for various', () => {
+    var result = [
+      VFieldHelper.buildHashesSummedBase('purchaser'),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'dynamic',
+        editable: false,
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        as: 'string',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
 
 });
