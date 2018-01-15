@@ -1,287 +1,312 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = require("lodash");
-const s = require("underscore.string");
-const pluralize = require("pluralize");
-const v_tools_1 = require("v-tools");
-const createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
-class VFieldHelper {
-    constructor() {
+var _ = require("lodash");
+var s = require("underscore.string");
+var pluralize = require("pluralize");
+var v_tools_1 = require("v-tools");
+var createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
+var VFieldHelper = /** @class */ (function () {
+    function VFieldHelper() {
     }
-    static get positiveDecimalMask() {
-        return createNumberMask_1.default({
-            prefix: '',
-            // suffix: emptyString,
-            // includeThousandsSeparator: true,
-            // thousandsSeparatorSymbol: comma,
-            allowDecimal: true,
-            // decimalSymbol: period,
-            decimalLimit: 15,
-        });
-    }
+    Object.defineProperty(VFieldHelper, "positiveDecimalMask", {
+        get: function () {
+            return createNumberMask_1.default({
+                prefix: '',
+                // suffix: emptyString,
+                // includeThousandsSeparator: true,
+                // thousandsSeparatorSymbol: comma,
+                allowDecimal: true,
+                // decimalSymbol: period,
+                decimalLimit: 15,
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
     ;
-    static get positiveIntegerMask() {
-        return createNumberMask_1.default({
-            prefix: '',
-            // suffix: emptyString,
-            // includeThousandsSeparator: true,
-            // thousandsSeparatorSymbol: comma,
-            allowDecimal: false,
-        });
-    }
+    Object.defineProperty(VFieldHelper, "positiveIntegerMask", {
+        get: function () {
+            return createNumberMask_1.default({
+                prefix: '',
+                // suffix: emptyString,
+                // includeThousandsSeparator: true,
+                // thousandsSeparatorSymbol: comma,
+                allowDecimal: false,
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
     ;
-    static positiveIntegerUnmask(value) {
+    VFieldHelper.positiveIntegerUnmask = function (value) {
         return parseInt((value || 0).toString().trim().replace(/\..*/g, '').replace(/[^\d]/g, ''));
-    }
+    };
     ;
-    static positiveDecimalUnmask(value) {
+    VFieldHelper.positiveDecimalUnmask = function (value) {
         return parseFloat((value || 0).toString().trim().replace(/[^\d\.]/g, ''));
-    }
+    };
     ;
-    static get V_FIELD_TYPES() {
-        return {
-            basic_input: {
-                vInputType: 'vInput',
-                label: 'Basic Input',
-                hint: 'Basic Input',
-                editable: true,
-            },
-            applicability: {
-                vInputType: 'vSwitch',
-                label: 'Applicability Switch',
-                hint: 'Applicability Switch',
-                editable: false,
-            },
-            date: {
-                vInputType: 'vDatepicker',
-                label: 'Date',
-                hint: 'Date',
-                editable: true,
-                textMask: function () {
-                    return [/\d/, /\d/, /\d/, /\d/, '-', /[01]/, /\d/, '-', /[0123]/, /\d/];
-                }
-            },
-            dollar_integer: {
-                beforeAddon: '$',
-                afterAddon: '.00',
-                vInputType: 'vInput',
-                label: 'Dollar (round)',
-                hint: 'Dollar (round)',
-                editable: true,
-                textMask: VFieldHelper.positiveIntegerMask,
-                // textMask: VFieldHelper.preciseDollarDecimalMask,
-                // textMask: function(value) {
-                //   return value.split('').map((i) => { return /\d/; });
-                // },
-                textUnmask: VFieldHelper.positiveIntegerUnmask,
-            },
-            dollar_precise_decimal: {
-                beforeAddon: '$',
-                vInputType: 'vInput',
-                label: 'Dollar (precise)',
-                hint: 'Dollar (precise)',
-                editable: true,
-                textMask: VFieldHelper.positiveDecimalMask,
-                // textMask: (value): any[] => {
-                //   // return value.split('').map((i) => /\d/);
-                //   return VFieldHelper.preciseDollarDecimalMask(value);
-                // },
-                // textMask: createNumberMask({}),
-                // public get autoCorrectedDatePipe(): any { return createAutoCorrectedDatePipe('mm/dd/yyyy'); }
-                textUnmask: VFieldHelper.positiveDecimalUnmask,
-            },
-            positive_integer: {
-                afterAddon: '.0',
-                vInputType: 'vInput',
-                label: 'Positive Number (round)',
-                hint: 'Positive Number (round)',
-                editable: true,
-                textMask: VFieldHelper.positiveIntegerMask,
-                // textMask: function(value) {
-                //   return value.split('').map((i) => { return /\d/; });
-                // },
-                textUnmask: VFieldHelper.positiveIntegerUnmask,
-            },
-            positive_decimal: {
-                vInputType: 'vInput',
-                label: 'Positive Number (precise)',
-                hint: 'Positive Number (precise)',
-                editable: true,
-                textMask: VFieldHelper.positiveDecimalMask,
-                textUnmask: VFieldHelper.positiveDecimalUnmask,
-            },
-            percent: {
-                afterAddon: '%',
-                vInputType: 'vInput',
-                label: 'Percentage',
-                hint: 'Percentage',
-                editable: true,
-                textMask: VFieldHelper.positiveDecimalMask,
-            },
-            percent_threshold: {
-                afterAddon: '%',
-                vInputType: 'vInput',
-                label: 'Voting/Percent Threshold',
-                hint: 'Voting/Percent Threshold',
-                editable: true,
-                textMask: VFieldHelper.positiveDecimalMask,
-            },
-            textarea: {
-                vInputType: 'vInput',
-                label: 'Text Area',
-                hint: 'Text Area',
-                editable: true,
-            },
-            organization_state: {
-                vInputType: 'vInput',
-                label: 'Organization State',
-                hint: 'Organization State',
-                editable: true,
-            },
-            state_or_place: {
-                vInputType: 'vInput',
-                label: 'State or Place',
-                hint: 'State or Place',
-                editable: true,
-            },
-            entity_type: {
-                vInputType: 'vInput',
-                label: 'Entity Type',
-                hint: 'Entity Type',
-                editable: true,
-            },
-            period_type: {
-                vInputType: 'vInput',
-                label: 'Period Type',
-                hint: 'Period Type',
-                editable: true,
-            },
-            hashes: {
-                vInputType: 'vHashes',
-                label: 'List/Hashes',
-                hint: 'List/Hashes',
-                editable: false,
-            },
-            v_sig: {
-                // vInputType: 'vInput',
-                label: 'V Sig',
-                hint: 'V Sig',
-                editable: false,
-            },
-            form_copy: {
-                vInputType: 'vSwitch',
-                label: 'Form Copy',
-                hint: 'Form Copy',
-                editable: false,
-            },
-            annotated_copy: {
-                vInputType: 'vSwitch',
-                label: 'Annotated Copy',
-                hint: 'Annotated Copy',
-                editable: false,
-            },
-        };
-    }
-    static get V_FIELD_TYPES_COLLECTION() {
-        return _.reduce(VFieldHelper.V_FIELD_TYPES, (memo, obj, k) => {
-            if (obj.editable) {
-                memo.push([k, obj.label || obj.display_name]);
-            }
-            return memo;
-        }, []);
-    }
-    static get V_FIELD_HELPER_MAP() {
-        return {
-            display_name: {},
-            verbose_display_name: {},
-            terse_display_name: {},
-            label: {
-                label: 'Label',
-                hint: 'Label for input',
-                placeholder: 'E.g., Name of the Purchaser',
-                as: 'string',
-            },
-            hint: {
-                label: 'Hint',
-                hint: 'Additional information to be shown about this input',
-                placeholder: 'E.g., Name of the Purchaser',
-                as: 'string',
-            },
-            more_info: {
-                label: 'More Info',
-                hint: 'Optional - More information that is not shown by default ' +
-                    'but can be seen if the user clicks to get more information',
-                placeholder: 'E.g., Detailed information about this input and/or its context.',
-                as: 'text',
-                rows: 5,
-            },
-            placeholder: {
-                label: 'Placeholder',
-                hint: 'Optional - Text that appears in the input when it is blank',
-                placeholder: 'E.g., grayed placeholder text',
-                as: 'string',
-            },
-            field_type: {
-                label: 'Field Type',
-                hint: 'Optional - To change the type of field, select the desired field type',
-                placeholder: 'To Override Field Type ...',
-                // as: 'string',
-                other_input_options: {
-                    collection: VFieldHelper.V_FIELD_TYPES_COLLECTION,
-                    value_method: 'first',
-                    label_method: 'last',
-                    include_blank: 'To Override Field Type ...'
+    Object.defineProperty(VFieldHelper, "V_FIELD_TYPES", {
+        get: function () {
+            return {
+                basic_input: {
+                    vInputType: 'vInput',
+                    label: 'Basic Input',
+                    hint: 'Basic Input',
+                    editable: true,
                 },
-            },
-            security_types: {},
-            default_visible: {},
-            fill_approach: {},
-            dynamic_fill_approach_v_asset_types: [],
-            api_maps: {
-                label: 'API Map',
-                hint: 'Optional - API map',
-                placeholder: 'E.g., drag API map handle',
-                as: 'hidden',
-            },
-            manually_calculable: {},
-            step: {},
-            step_field_order: {},
-            as: {},
-            required: {},
-            input_html: {},
-            other_input_options: {},
-            custom_input_size: {},
-            sum_type: {},
-            adjusted: {},
-            editable: {},
-            display: {},
-            display_with: {},
-            ng_filter: {},
-            use_formatters: {},
-            formatters: {},
-            input_formatters: {},
-            js_formatters: {},
-            input_processor: {},
-            dependency: {},
-            dependency_value: {},
-        };
-    }
-    static get EDITABLE_V_FIELD_HELPER_ATTS() {
-        return [
-            'label',
-            'hint',
-            'more_info',
-            'placeholder',
-        ];
-    }
+                applicability: {
+                    vInputType: 'vSwitch',
+                    label: 'Applicability Switch',
+                    hint: 'Applicability Switch',
+                    editable: false,
+                },
+                date: {
+                    vInputType: 'vDatepicker',
+                    label: 'Date',
+                    hint: 'Date',
+                    editable: true,
+                    textMask: function () {
+                        return [/\d/, /\d/, /\d/, /\d/, '-', /[01]/, /\d/, '-', /[0123]/, /\d/];
+                    }
+                },
+                dollar_integer: {
+                    beforeAddon: '$',
+                    afterAddon: '.00',
+                    vInputType: 'vInput',
+                    label: 'Dollar (round)',
+                    hint: 'Dollar (round)',
+                    editable: true,
+                    textMask: VFieldHelper.positiveIntegerMask,
+                    // textMask: VFieldHelper.preciseDollarDecimalMask,
+                    // textMask: function(value) {
+                    //   return value.split('').map((i) => { return /\d/; });
+                    // },
+                    textUnmask: VFieldHelper.positiveIntegerUnmask,
+                },
+                dollar_precise_decimal: {
+                    beforeAddon: '$',
+                    vInputType: 'vInput',
+                    label: 'Dollar (precise)',
+                    hint: 'Dollar (precise)',
+                    editable: true,
+                    textMask: VFieldHelper.positiveDecimalMask,
+                    // textMask: (value): any[] => {
+                    //   // return value.split('').map((i) => /\d/);
+                    //   return VFieldHelper.preciseDollarDecimalMask(value);
+                    // },
+                    // textMask: createNumberMask({}),
+                    // public get autoCorrectedDatePipe(): any { return createAutoCorrectedDatePipe('mm/dd/yyyy'); }
+                    textUnmask: VFieldHelper.positiveDecimalUnmask,
+                },
+                positive_integer: {
+                    afterAddon: '.0',
+                    vInputType: 'vInput',
+                    label: 'Positive Number (round)',
+                    hint: 'Positive Number (round)',
+                    editable: true,
+                    textMask: VFieldHelper.positiveIntegerMask,
+                    // textMask: function(value) {
+                    //   return value.split('').map((i) => { return /\d/; });
+                    // },
+                    textUnmask: VFieldHelper.positiveIntegerUnmask,
+                },
+                positive_decimal: {
+                    vInputType: 'vInput',
+                    label: 'Positive Number (precise)',
+                    hint: 'Positive Number (precise)',
+                    editable: true,
+                    textMask: VFieldHelper.positiveDecimalMask,
+                    textUnmask: VFieldHelper.positiveDecimalUnmask,
+                },
+                percent: {
+                    afterAddon: '%',
+                    vInputType: 'vInput',
+                    label: 'Percentage',
+                    hint: 'Percentage',
+                    editable: true,
+                    textMask: VFieldHelper.positiveDecimalMask,
+                },
+                percent_threshold: {
+                    afterAddon: '%',
+                    vInputType: 'vInput',
+                    label: 'Voting/Percent Threshold',
+                    hint: 'Voting/Percent Threshold',
+                    editable: true,
+                    textMask: VFieldHelper.positiveDecimalMask,
+                },
+                textarea: {
+                    vInputType: 'vInput',
+                    label: 'Text Area',
+                    hint: 'Text Area',
+                    editable: true,
+                },
+                organization_state: {
+                    vInputType: 'vInput',
+                    label: 'Organization State',
+                    hint: 'Organization State',
+                    editable: true,
+                },
+                state_or_place: {
+                    vInputType: 'vInput',
+                    label: 'State or Place',
+                    hint: 'State or Place',
+                    editable: true,
+                },
+                entity_type: {
+                    vInputType: 'vInput',
+                    label: 'Entity Type',
+                    hint: 'Entity Type',
+                    editable: true,
+                },
+                period_type: {
+                    vInputType: 'vInput',
+                    label: 'Period Type',
+                    hint: 'Period Type',
+                    editable: true,
+                },
+                hashes: {
+                    vInputType: 'vHashes',
+                    label: 'List/Hashes',
+                    hint: 'List/Hashes',
+                    editable: false,
+                },
+                v_sig: {
+                    // vInputType: 'vInput',
+                    label: 'V Sig',
+                    hint: 'V Sig',
+                    editable: false,
+                },
+                form_copy: {
+                    vInputType: 'vSwitch',
+                    label: 'Form Copy',
+                    hint: 'Form Copy',
+                    editable: false,
+                },
+                annotated_copy: {
+                    vInputType: 'vSwitch',
+                    label: 'Annotated Copy',
+                    hint: 'Annotated Copy',
+                    editable: false,
+                },
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(VFieldHelper, "V_FIELD_TYPES_COLLECTION", {
+        get: function () {
+            return _.reduce(VFieldHelper.V_FIELD_TYPES, function (memo, obj, k) {
+                if (obj.editable) {
+                    memo.push([k, obj.label || obj.display_name]);
+                }
+                return memo;
+            }, []);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(VFieldHelper, "V_FIELD_HELPER_MAP", {
+        get: function () {
+            return {
+                display_name: {},
+                verbose_display_name: {},
+                terse_display_name: {},
+                label: {
+                    label: 'Label',
+                    hint: 'Label for input',
+                    placeholder: 'E.g., Name of the Purchaser',
+                    as: 'string',
+                },
+                hint: {
+                    label: 'Hint',
+                    hint: 'Additional information to be shown about this input',
+                    placeholder: 'E.g., Name of the Purchaser',
+                    as: 'string',
+                },
+                more_info: {
+                    label: 'More Info',
+                    hint: 'Optional - More information that is not shown by default ' +
+                        'but can be seen if the user clicks to get more information',
+                    placeholder: 'E.g., Detailed information about this input and/or its context.',
+                    as: 'text',
+                    rows: 5,
+                },
+                placeholder: {
+                    label: 'Placeholder',
+                    hint: 'Optional - Text that appears in the input when it is blank',
+                    placeholder: 'E.g., grayed placeholder text',
+                    as: 'string',
+                },
+                field_type: {
+                    label: 'Field Type',
+                    hint: 'Optional - To change the type of field, select the desired field type',
+                    placeholder: 'To Override Field Type ...',
+                    // as: 'string',
+                    other_input_options: {
+                        collection: VFieldHelper.V_FIELD_TYPES_COLLECTION,
+                        value_method: 'first',
+                        label_method: 'last',
+                        include_blank: 'To Override Field Type ...'
+                    },
+                },
+                security_types: {},
+                default_visible: {},
+                fill_approach: {},
+                dynamic_fill_approach_v_asset_types: [],
+                api_maps: {
+                    label: 'API Map',
+                    hint: 'Optional - API map',
+                    placeholder: 'E.g., drag API map handle',
+                    as: 'hidden',
+                },
+                manually_calculable: {},
+                step: {},
+                step_field_order: {},
+                as: {},
+                required: {},
+                input_html: {},
+                other_input_options: {},
+                custom_input_size: {},
+                sum_type: {},
+                adjusted: {},
+                editable: {},
+                display: {},
+                display_with: {},
+                ng_filter: {},
+                use_formatters: {},
+                formatters: {},
+                input_formatters: {},
+                js_formatters: {},
+                input_processor: {},
+                dependency: {},
+                dependency_value: {},
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(VFieldHelper, "EDITABLE_V_FIELD_HELPER_ATTS", {
+        get: function () {
+            return [
+                'label',
+                'hint',
+                'more_info',
+                'placeholder',
+            ];
+        },
+        enumerable: true,
+        configurable: true
+    });
     ;
-    static labelize(string) {
+    VFieldHelper.labelize = function (string) {
         return s.titleize(VFieldHelper.hintize(string));
-    }
-    static hintize(string) {
+    };
+    VFieldHelper.hintize = function (string) {
         return s.capitalize(s.underscored((string || '').toString()).split(/\_|(\W)/).join(' ').replace(/\s+/g, ' '));
-    }
-    static fieldToLabel(str, label = true) {
+    };
+    VFieldHelper.fieldToLabel = function (str, label) {
+        if (label === void 0) { label = true; }
         str = (str || '').toString().toLowerCase();
         if ((/\_hashed\_/g).test(str)) {
             str = str.split(/\_hashed\_/g).slice(1).join('_hashed_');
@@ -296,23 +321,23 @@ class VFieldHelper {
                 '_' + str.split(/\_hashes\_summed\_/).slice(1).join('_hashes_');
         }
         return label ? VFieldHelper.labelize(str) : VFieldHelper.hintize(str);
-    }
-    static addDataAttsToFieldHelp(fieldHelp, dataAttsHash, options) {
+    };
+    VFieldHelper.addDataAttsToFieldHelp = function (fieldHelp, dataAttsHash, options) {
         options = _.defaults(options || {}, {});
         if (v_tools_1.VTools.isObject(dataAttsHash) && v_tools_1.VTools.isObject(fieldHelp)) {
-            let inputHTML = fieldHelp.input_html || {};
-            let inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
+            var inputHTML = fieldHelp.input_html || {};
+            var inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
             inputHTML.data = inputHTMLData;
             fieldHelp.input_html = inputHTML;
         }
         return fieldHelp;
-    }
-    static setAltDependencies(fieldHelp, altDependencies, altDependencyValues) {
+    };
+    VFieldHelper.setAltDependencies = function (fieldHelp, altDependencies, altDependencyValues) {
         fieldHelp = fieldHelp || {};
-        let inputHtml = fieldHelp.input_html || {};
-        let inputHtmlClass = ((inputHtml.class || '') + ' isDependent').trim();
+        var inputHtml = fieldHelp.input_html || {};
+        var inputHtmlClass = ((inputHtml.class || '') + ' isDependent').trim();
         inputHtml.class = inputHtmlClass;
-        let inputHTMLData = inputHtml.data || {};
+        var inputHTMLData = inputHtml.data || {};
         inputHTMLData = _.defaults({
             alt_dependencies: altDependencies,
             alt_dependency_values: altDependencyValues
@@ -325,11 +350,11 @@ class VFieldHelper {
             alt_dependency_values: altDependencyValues
         }, fieldHelp);
         return fieldHelp;
-    }
-    static buildGeneratedNames(input, changes, options) {
+    };
+    VFieldHelper.buildGeneratedNames = function (input, changes, options) {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
-        let name, label, terseLabel, hint;
+        var name, label, terseLabel, hint;
         name = v_tools_1.VTools.makeString(changes.input_name || input);
         if (options.question) {
             name = name.replace(/^(?:ha|i)s\_/g, '')
@@ -371,14 +396,14 @@ class VFieldHelper {
             hint: hint,
             required: false,
         });
-    }
-    static buildGeneratedPercentNames(input, changes) {
+    };
+    VFieldHelper.buildGeneratedPercentNames = function (input, changes) {
         return VFieldHelper.buildGeneratedNames(input, changes, { percent: true });
-    }
-    static buildGeneratedPercentThresholdNames(input, changes) {
+    };
+    VFieldHelper.buildGeneratedPercentThresholdNames = function (input, changes) {
         return VFieldHelper.buildGeneratedNames(input, changes, { percent_threshold: true });
-    }
-    static buildBase(input, changes, options) {
+    };
+    VFieldHelper.buildBase = function (input, changes, options) {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
         return _.defaults(changes, _.defaults((input ? VFieldHelper.buildGeneratedNames(input, {}, options) : {}), {
@@ -399,7 +424,7 @@ class VFieldHelper {
             display: true,
             default_visible: true,
         }));
-    }
+    };
     // string
     // textarea
     // pos int
@@ -417,19 +442,19 @@ class VFieldHelper {
     // select
     // ac
     // relation
-    static buildBaseString(input, changes) {
+    VFieldHelper.buildBaseString = function (input, changes) {
         return _.chain(changes || {}).defaults({
             placeholder: 'Type value_',
             custom_input_size: '4',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildString(changes) {
+    };
+    VFieldHelper.buildString = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseString((changes || { input_name: null }).input_name || 'value'));
-    }
-    static buildGeneratedString(input, changes) {
+    };
+    VFieldHelper.buildGeneratedString = function (input, changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseString(input, { hint: null }));
-    }
-    static buildBaseTextarea(input, changes) {
+    };
+    VFieldHelper.buildBaseTextarea = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'textarea',
             placeholder: 'Type detail_',
@@ -438,14 +463,15 @@ class VFieldHelper {
             custom_input_size: '4',
             default_visible: false,
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildTextarea(changes) {
+    };
+    VFieldHelper.buildTextarea = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseTextarea('detail'));
-    }
-    static buildGeneratedTextarea(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedTextarea = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.defaults(changes || {}, VFieldHelper.buildBaseTextarea(input, { hint: null }));
-    }
-    static buildBasePositiveInteger(input, changes) {
+    };
+    VFieldHelper.buildBasePositiveInteger = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'positive_integer',
             placeholder: 'E.g., 1,000',
@@ -461,21 +487,22 @@ class VFieldHelper {
             input_formatters: 'variable_integer',
             input_processors: ['string_to_integer'],
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildPositiveInteger(changes) {
+    };
+    VFieldHelper.buildPositiveInteger = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBasePositiveInteger('number'));
-    }
-    static buildGeneratedPositiveInteger(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedPositiveInteger = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePositiveInteger(input, { hint: null })).value();
-    }
-    static buildBasePositiveVariableInteger(input, changes) {
+    };
+    VFieldHelper.buildBasePositiveVariableInteger = function (input, changes) {
         return _.chain(changes || {}).defaults({
             type_cast: 'float',
             input_html: { class: 'add-on-decimal inputmask-positive-decimal' },
             input_processors: ['string_to_decimal'],
         }).defaults(VFieldHelper.buildBasePositiveInteger(input)).value();
-    }
-    static buildBasePositiveDecimal(input, changes) {
+    };
+    VFieldHelper.buildBasePositiveDecimal = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'positive_decimal',
             placeholder: 'E.g., 0.00001',
@@ -490,14 +517,15 @@ class VFieldHelper {
             input_formatters: 'variable_decimal',
             input_processors: ['string_to_decimal'],
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildPositiveDecimal(changes) {
+    };
+    VFieldHelper.buildPositiveDecimal = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBasePositiveDecimal('precise_number'));
-    }
-    static buildGeneratedPositiveDecimal(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedPositiveDecimal = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePositiveDecimal(input, { hint: null })).value();
-    }
-    static buildBaseDollarInteger(input, changes) {
+    };
+    VFieldHelper.buildBaseDollarInteger = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'dollar_integer',
             placeholder: 'E.g., 40,000',
@@ -512,14 +540,15 @@ class VFieldHelper {
             input_formatters: 'variable_integer',
             input_processors: ['string_to_integer'],
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildDollarInteger(changes) {
+    };
+    VFieldHelper.buildDollarInteger = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseDollarInteger('dollar_amount'));
-    }
-    static buildGeneratedDollarInteger(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedDollarInteger = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseDollarInteger(input, { hint: null })).value();
-    }
-    static buildBaseDollarDecimal(input, changes) {
+    };
+    VFieldHelper.buildBaseDollarDecimal = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'dollar_precise_decimal',
             placeholder: 'E.g., 0.0001',
@@ -535,21 +564,22 @@ class VFieldHelper {
             input_formatters: ['string_to_decimal', 'variable_decimal'],
             input_processors: ['string_to_decimal'],
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
+    };
     // return _.chain(changes || {}).defaults({
     // }).defaults(VFieldHelper.buildBase(input)).value();
-    static buildBasePreciseDollarDecimal(input, changes) {
+    VFieldHelper.buildBasePreciseDollarDecimal = function (input, changes) {
         return _.chain(changes || {}).defaults({
             ng_filter: 'variableCurrency',
         }).defaults(VFieldHelper.buildBaseDollarDecimal(input)).value();
-    }
-    static buildDollarDecimal(changes) {
+    };
+    VFieldHelper.buildDollarDecimal = function (changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseDollarDecimal('cents_dollar_amount'));
-    }
-    static buildGeneratedDollarDecimal(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedDollarDecimal = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseDollarDecimal(input, { hint: null })).value();
-    }
-    static buildBasePercent(input, changes) {
+    };
+    VFieldHelper.buildBasePercent = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'percent',
             placeholder: 'E.g., 1.5',
@@ -564,14 +594,16 @@ class VFieldHelper {
             ng_filter: 'percentage:3',
             input_processors: ['string_to_decimal'],
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildPercent(changes = {}) {
+    };
+    VFieldHelper.buildPercent = function (changes) {
+        if (changes === void 0) { changes = {}; }
         return VFieldHelper.buildBasePercent('percent', changes);
-    }
-    static buildGeneratedPercent(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedPercent = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePercent(input, { hint: null })).value();
-    }
-    static buildBaseDecimalPercent(input, changes) {
+    };
+    VFieldHelper.buildBaseDecimalPercent = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'percent_threshold',
             sum_type: 'perc',
@@ -584,19 +616,19 @@ class VFieldHelper {
             jsInputProcessors: 'percToDecimal',
             ng_filter: 'decimalToPercStr',
         }).defaults(VFieldHelper.buildBasePercent(input)).value();
-    }
-    static buildDecimalPercent(changes) {
+    };
+    VFieldHelper.buildDecimalPercent = function (changes) {
         return VFieldHelper.buildBaseDecimalPercent('decimal_percent', changes);
-    }
-    static buildCalculatedDecimalPercent(input, changes) {
+    };
+    VFieldHelper.buildCalculatedDecimalPercent = function (input, changes) {
         return _.chain(changes || {}).defaults({
             fill_approach: 'dynamic',
             editable: false,
             adjusted: true,
         }).defaults(VFieldHelper.buildGeneratedPercentNames(input))
             .defaults(VFieldHelper.buildBaseDecimalPercent(input)).value();
-    }
-    static buildBasePercentThreshold(input, changes) {
+    };
+    VFieldHelper.buildBasePercentThreshold = function (input, changes) {
         return _.chain(changes || {}).defaults({
             hint: 'Threshold Percent.  50 is interpreted as "a majority".',
             field_type: 'percent_threshold',
@@ -616,14 +648,16 @@ class VFieldHelper {
             input_processors: ['string_to_decimal'],
         }).defaults(VFieldHelper.buildGeneratedPercentThresholdNames(input))
             .defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildPercentThreshold(changes = {}) {
+    };
+    VFieldHelper.buildPercentThreshold = function (changes) {
+        if (changes === void 0) { changes = {}; }
         return VFieldHelper.buildBasePercentThreshold('percent_threshold', changes);
-    }
-    static buildGeneratedPercentThreshold(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedPercentThreshold = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePercentThreshold(input, {})).value();
-    }
-    static buildBaseBoolean(input, changes, options) {
+    };
+    VFieldHelper.buildBaseBoolean = function (input, changes, options) {
         options = _.defaults(options || {}, {
             question: true
         });
@@ -639,22 +673,25 @@ class VFieldHelper {
             js_formatters: 'check',
             input_processors: ['is_true'],
         }, VFieldHelper.buildBase(input, {}, options)));
-    }
-    static buildBaseApplicability(input, changes, options) {
+    };
+    VFieldHelper.buildBaseApplicability = function (input, changes, options) {
         return _.chain(changes).defaults({ field_type: 'applicability' })
             .defaults(VFieldHelper.buildBaseBoolean(input)).value();
-    }
-    static buildApplicability(changes) {
+    };
+    VFieldHelper.buildApplicability = function (changes) {
         return _.chain(changes)
             .defaults(VFieldHelper.buildBaseApplicability('applicability')).value();
-    }
-    static buildGeneratedApplicability(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedApplicability = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseApplicability(input, { hint: null })).value();
-    }
-    static buildGeneratedElseApplicability(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedElseApplicability = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseApplicability(input, { hint: null })).value();
-    }
-    static buildFormCopy(changes = {}) {
+    };
+    VFieldHelper.buildFormCopy = function (changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({
             field_type: 'form_copy',
             input_name: 'form_copy',
@@ -664,8 +701,9 @@ class VFieldHelper {
             readonly_v_asset_types: ['PostIncorporation'],
             required: true,
         }).defaults(VFieldHelper.buildApplicability()).value();
-    }
-    static buildAnnotatedCopy(changes = {}) {
+    };
+    VFieldHelper.buildAnnotatedCopy = function (changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({
             field_type: 'annotated_copy',
             input_name: 'annotated_copy',
@@ -673,8 +711,8 @@ class VFieldHelper {
             label: 'Annotated Version?',
             display_name: 'Annotated Version?',
         }).defaults(VFieldHelper.buildApplicability()).value();
-    }
-    static buildBaseDatepicker(input, changes) {
+    };
+    VFieldHelper.buildBaseDatepicker = function (input, changes) {
         return _.defaults(changes, _.defaults({
             field_type: 'date',
             // placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
@@ -691,15 +729,15 @@ class VFieldHelper {
             ng_filter: 'date:mediumDate',
             js_formatters: 'formatDate',
         }, VFieldHelper.buildBase(input)));
-    }
-    static buildGeneratedDate(input, changes) {
-        let name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
+    };
+    VFieldHelper.buildGeneratedDate = function (input, changes) {
+        var name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
         return _.defaults(changes, VFieldHelper.buildBaseDatepicker(input.toString(), {
             // label: name === 'date' ? 'Date' : (VFieldHelper.fieldToLabel(name) + ' Date'),
             hint: 'Select the date',
         }));
-    }
-    static buildBaseOrgState(input, changes) {
+    };
+    VFieldHelper.buildBaseOrgState = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'organization_state',
             fill_approach: 'manual',
@@ -710,8 +748,8 @@ class VFieldHelper {
             use_formatters: true,
             formatters: 'state',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildOrgState(changes) {
+    };
+    VFieldHelper.buildOrgState = function (changes) {
         return _.chain(changes)
             .defaults(VFieldHelper.buildBaseOrgState('org_state', {
             fill_approach: 'dynamic',
@@ -719,11 +757,12 @@ class VFieldHelper {
             hint: 'State where company incorporated / organized',
             placeholder: 'Select or Type State',
         })).value();
-    }
-    static buildGeneratedOrgState(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedOrgState = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseOrgState(input, {})).value();
-    }
-    static buildBaseAcState(input, changes) {
+    };
+    VFieldHelper.buildBaseAcState = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'state_or_place',
             placeholder: 'Select or Type State or Place',
@@ -734,14 +773,15 @@ class VFieldHelper {
             use_formatters: true,
             formatters: 'state',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildAcState(changes) {
+    };
+    VFieldHelper.buildAcState = function (changes) {
         return VFieldHelper.buildBaseAcState('state_or_place', changes);
-    }
-    static buildGeneratedAcState(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedAcState = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcState(input, {})).value();
-    }
-    static buildBaseAcOrgType(input, changes) {
+    };
+    VFieldHelper.buildBaseAcOrgType = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'entity_type',
             placeholder: 'Select or Type Entity Type',
@@ -751,14 +791,15 @@ class VFieldHelper {
             use_formatters: true,
             formatters: 'entity_type',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildAcOrgType(changes) {
+    };
+    VFieldHelper.buildAcOrgType = function (changes) {
         return VFieldHelper.buildBaseAcOrgType('entity_or_org_type', changes);
-    }
-    static buildGeneratedACOrgType(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedACOrgType = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcOrgType(input, { hint: null })).value();
-    }
-    static buildBaseAcSecurityName(input, changes) {
+    };
+    VFieldHelper.buildBaseAcSecurityName = function (input, changes) {
         return _.chain(changes || {}).defaults({
             // field_type: 'security_name',
             label: 'Security Name',
@@ -769,14 +810,15 @@ class VFieldHelper {
             custom_input_size: '3',
             input_html: { class: 'acSecurityName' },
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildAcSecurityName(changes) {
+    };
+    VFieldHelper.buildAcSecurityName = function (changes) {
         return VFieldHelper.buildBaseAcSecurityName('security_name', changes);
-    }
-    static buildGeneratedAcSecurityName(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedAcSecurityName = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBaseAcSecurityName(input, {})).value();
-    }
-    static buildBasePeriodType(input, changes) {
+    };
+    VFieldHelper.buildBasePeriodType = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'period_type',
             placeholder: 'Select Period Type',
@@ -787,21 +829,22 @@ class VFieldHelper {
             },
             custom_input_size: '3',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildPeriodType(changes) {
+    };
+    VFieldHelper.buildPeriodType = function (changes) {
         return VFieldHelper.buildBasePeriodType('period_type', changes);
-    }
-    static buildGeneratedPeriodType(input, changes = {}) {
+    };
+    VFieldHelper.buildGeneratedPeriodType = function (input, changes) {
+        if (changes === void 0) { changes = {}; }
         return _.chain(changes || {}).defaults({}).defaults(VFieldHelper.buildBasePeriodType(input, { hint: null })).value();
-    }
-    static buildGeneratedVSig(input, changes) {
+    };
+    VFieldHelper.buildGeneratedVSig = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'v_sig',
             fill_approach: 'dynamic',
             display: false,
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildBaseObjectHashes(input, changes) {
+    };
+    VFieldHelper.buildBaseObjectHashes = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'hashes',
             fill_approach: 'dynamic',
@@ -809,14 +852,14 @@ class VFieldHelper {
             use_formatters: true,
             formatters: 'smart_array_of_hash_values',
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildObjectHashes(changes) {
+    };
+    VFieldHelper.buildObjectHashes = function (changes) {
         return VFieldHelper.buildBaseObjectHashes('object_hashes', changes);
-    }
-    static buildGeneratedObjectHashes(input, changes) {
+    };
+    VFieldHelper.buildGeneratedObjectHashes = function (input, changes) {
         return _.defaults(changes || {}, VFieldHelper.buildBaseObjectHashes(input, { hint: null }));
-    }
-    static buildBaseVirtualModelHashes(input, changes) {
+    };
+    VFieldHelper.buildBaseVirtualModelHashes = function (input, changes) {
         return _.chain(changes || {}).defaults({
             field_type: 'hashes',
             fill_approach: 'virtual_model',
@@ -824,30 +867,31 @@ class VFieldHelper {
             display_with: 'hashes_to_lines',
             use_formatters: true,
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-    static buildVirtualModelHashes(changes) {
+    };
+    VFieldHelper.buildVirtualModelHashes = function (changes) {
         return VFieldHelper.buildBaseVirtualModelHashes('virtual_model_hashes', {
             label: 'Virtual Model',
             hint: 'Carefully complete the inputs to model this attribute.',
         });
-    }
-    static buildGeneratedVirtualModelHashes(input, changes) {
+    };
+    VFieldHelper.buildGeneratedVirtualModelHashes = function (input, changes) {
         return _.chain(changes || {}).defaults({
             fill_approach: 'generated_virtual_model'
         })
             .defaults(VFieldHelper.buildBaseVirtualModelHashes(input, changes)).value();
-    }
-    static buildHashesSummedBase(input, changes) {
+    };
+    VFieldHelper.buildHashesSummedBase = function (input, changes) {
         return _.chain(changes).defaults({
             fill_approach: 'dynamic',
             editable: false,
         }).defaults(VFieldHelper.buildBase(input)).value();
-    }
-}
-VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
-VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
-VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
-VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
+    };
+    VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
+    VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
+    VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
+    VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
+    return VFieldHelper;
+}());
 exports.VFieldHelper = VFieldHelper;
 // public static get_default_country_collection(opts={})
 //   ([['United States', 'US']] +

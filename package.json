@@ -2,10 +2,10 @@
   "name": "v-field-helper",
   "version": "0.0.1",
   "description": "interface and helpers for data inputs and json structures",
-  "main": "dist/index.js",
+  "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && uglifyjs dist/index.js --compress --mangle  > ./dist/index.min.js",
     "test": "mocha --reporter spec",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"
   },
@@ -48,6 +48,7 @@
     "mocha": "^4.1.0",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2",
+    "uglify-js": "^3.3.7",
     "v-tools": "0.0.8"
   }
 }
