@@ -354,7 +354,8 @@ var VFieldHelper = /** @class */ (function () {
     VFieldHelper.buildGeneratedNames = function (input, changes, options) {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
-        var name, label, terseLabel, hint;
+        var name, label;
+        var terse_display_name, verbose_display_name = '', hint;
         name = v_tools_1.VTools.makeString(changes.input_name || input);
         if (options.question) {
             name = name.replace(/^(?:ha|i)s\_/g, '')
@@ -384,18 +385,29 @@ var VFieldHelper = /** @class */ (function () {
         if (options.percent_threshold) {
             hint += '. 50 is interpreted as "a majority".';
         }
-        terseLabel = label;
-        if (options.percent) {
-            terseLabel = terseLabel.replace(/percentage/ig, '%');
+        if (options.db_key) {
+            hint += ' (DB record key)';
         }
-        return _.defaults(changes, {
+        if (options.db_timestamp) {
+            hint += ' (DB timestamp)';
+            verbose_display_name = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
+        }
+        terse_display_name = label;
+        if (options.percent) {
+            terse_display_name = terse_display_name.replace(/percentage/ig, '%');
+        }
+        var generatedNames = {
             input_name: input.toString(),
             label: label,
             display_name: label,
-            terse_display_name: terseLabel,
+            terse_display_name: terse_display_name,
             hint: hint,
             required: false,
-        });
+        };
+        if (verbose_display_name) {
+            generatedNames.verbose_display_name = verbose_display_name;
+        }
+        return _.defaults(changes, generatedNames);
     };
     VFieldHelper.buildGeneratedPercentNames = function (input, changes) {
         return VFieldHelper.buildGeneratedNames(input, changes, { percent: true });
@@ -886,6 +898,31 @@ var VFieldHelper = /** @class */ (function () {
             editable: false,
         }).defaults(VFieldHelper.buildBase(input)).value();
     };
+    VFieldHelper.buildBaseDbKey = function (input, changes) {
+        return _.chain(changes || {}).defaults({
+            placeholder: 'E.g., 123',
+            fill_approach: 'dynamic',
+            other_input_options: { readonly: true },
+            default_visible: false,
+            editable: false,
+            display: false,
+        }).defaults(VFieldHelper.buildBase(input, {}, { db_key: true })).value();
+    };
+    VFieldHelper.buildDbKey = function (changes) {
+        return _.defaults(changes || {}, VFieldHelper.buildBaseDbKey((changes || { input_name: null }).input_name || 'db_key'));
+    };
+    VFieldHelper.buildBaseDbTimestamp = function (input, changes) {
+        return _.chain(changes || {}).defaults({
+            fill_approach: 'dynamic',
+            other_input_options: { readonly: true },
+            default_visible: false,
+            editable: false,
+            display: false,
+        }).defaults(VFieldHelper.buildBase(input, {}, { db_timestamp: true })).value();
+    };
+    VFieldHelper.buildDbTimestamp = function (changes) {
+        return _.defaults(changes || {}, VFieldHelper.buildBaseDbTimestamp((changes || { input_name: null }).input_name || 'db_timestamp'));
+    };
     VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
     VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
     VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
@@ -949,30 +986,6 @@ exports.VFieldHelper = VFieldHelper;
 //   end
 //   public static build_datetimepicker(changes = {})
 //     buildBase_datetimepicker(:datetimepicker, changes)
-//   end
-//   public static build_timestamp(changes = {})
-//     buildBase_datetimepicker(:timestamp, {
-//       fill_approach: 'dynamic',
-//     }).merge(changes)
-//   end
-//   public static build_db_timestamp(input, changes = {})
-//     build_timestamp(build_generated_db_timestamp_names(input, {
-//       editable: false,
-//       display: false,
-//     })).merge(changes)
-//   end
-//   public static buildBase_db_key(input, changes = {})
-//     buildBase(input).merge(
-//       placeholder: 'E.g., 123',
-//       fill_approach: 'dynamic',
-//       other_input_options: {readonly: true},
-//       default_visible: false,
-//       editable: false,
-//       display: false,
-//     ).merge(changes)
-//   end
-//   public static build_db_key(input, changes = {})
-//     buildBase_db_key(input, build_generated_db_key_names(input, {})).merge(changes)
 //   end
 //   public static buildBase_compounding(input, changes = {})
 //     buildBase_select(input).merge(

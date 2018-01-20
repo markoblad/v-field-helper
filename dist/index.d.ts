@@ -72,6 +72,8 @@ export declare class VFieldHelper {
         percent_threshold?: boolean;
         organization_state?: boolean;
         v_sig?: boolean;
+        db_key?: boolean;
+        db_timestamp?: boolean;
     }): VFieldInterface;
     static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
@@ -286,5 +288,9 @@ export declare class VFieldHelper {
     static buildVirtualModelHashes(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedVirtualModelHashes(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildHashesSummedBase(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildBaseDbKey(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildDbKey(changes?: VFieldInterface): VFieldInterface;
+    static buildBaseDbTimestamp(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildDbTimestamp(changes?: VFieldInterface): VFieldInterface;
     constructor();
 }

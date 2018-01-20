@@ -2208,5 +2208,101 @@ describe('VFieldHelper functions test', () => {
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
+  it('should return buildBaseDbKey for various', () => {
+    var result = [
+      VFieldHelper.buildBaseDbKey('purchaser'),
+    ];
+    var expectation = [
+      {
+        placeholder: 'E.g., 123',
+        fill_approach: 'dynamic',
+        other_input_options: {readonly: true},
+        default_visible: false,
+        editable: false,
+        display: false,
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser (DB record key)',
+        required: false,
+        as: 'string',
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDbKey for various', () => {
+    var result = [
+      VFieldHelper.buildDbKey(),
+    ];
+    var expectation = [
+      {
+        placeholder: 'E.g., 123',
+        fill_approach: 'dynamic',
+        other_input_options: {readonly: true},
+        default_visible: false,
+        editable: false,
+        display: false,
+      
+        input_name: 'db_key',
+        label: 'Db Key',
+        display_name: 'Db Key',
+        terse_display_name: 'Db Key',
+        hint: 'Db key (DB record key)',
+        required: false,
+        as: 'string',
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseDbTimestamp for various', () => {
+    var result = [
+      VFieldHelper.buildBaseDbTimestamp('purchaser'),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'dynamic',
+        other_input_options: {readonly: true},
+        default_visible: false,
+        editable: false,
+        display: false,
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser (DB timestamp)',
+        required: false,
+        verbose_display_name: 'Entry Purchaser',
+        as: 'string',
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDbTimestamp for various', () => {
+    var result = [
+      VFieldHelper.buildDbTimestamp(),
+    ];
+    var expectation = [
+      {
+        fill_approach: 'dynamic',
+        other_input_options: {readonly: true},
+        default_visible: false,
+        editable: false,
+        display: false,
+      
+        input_name: 'db_timestamp',
+        label: 'Db Timestamp',
+        display_name: 'Db Timestamp',
+        terse_display_name: 'Db Timestamp',
+        hint: 'Db timestamp (DB timestamp)',
+        required: false,
+        verbose_display_name: 'Entry Db Timestamp',
+        as: 'string',
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
 
 });
