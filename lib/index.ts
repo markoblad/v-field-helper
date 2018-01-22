@@ -60,6 +60,7 @@ export interface VFieldSubTypeHash {
 }
 
 export class VFieldHelper {
+
   public static get positiveDecimalMask(): any {
     return createNumberMask({
       prefix: '',
@@ -337,6 +338,264 @@ export class VFieldHelper {
     'placeholder',
   ]; };
 
+  public static get COUNTRY_CODES(): {} { return {
+      us: {name: 'United States', dialCode: 1},
+      bb: {name: 'Barbados', dialCode: 1},
+      bm: {name: 'Bermuda', dialCode: 1},
+      gu: {name: 'Guam', dialCode: 1},
+      ag: {name: 'Antigua and Barbuda', dialCode: 1},
+      ai: {name: 'Anguilla', dialCode: 1},
+      ca: {name: 'Canada', dialCode: 1},
+      ky: {name: 'Cayman Islands', dialCode: 1},
+      jm: {name: 'Jamaica', dialCode: 1},
+      gd: {name: 'Grenada', dialCode: 1},
+      vi: {name: 'Virgin Islands, U.S.', dialCode: 1},
+      pr: {name: 'Puerto Rico', dialCode: 1},
+      as: {name: 'American Samoa', dialCode: 1},
+      sx: {name: 'Sint Maarten', dialCode: 1},
+      tt: {name: 'Trinidad and Tobago', dialCode: 1},
+      vg: {name: 'Virgin Islands, British', dialCode: 1},
+      lc: {name: 'Saint Lucia', dialCode: 1},
+      vc: {name: 'Saint Vincent And The Grenedines', dialCode: 1},
+      bs: {name: 'Bahamas', dialCode: 1},
+      ms: {name: 'Montserrat', dialCode: 1},
+      kn: {name: 'Saint Kitts And Nevis', dialCode: 1},
+      dm: {name: 'Dominica', dialCode: 1},
+      do: {name: 'Dominican Republic', dialCode: 1},
+      mp: {name: 'Northern Mariana Islands', dialCode: 1},
+      tc: {name: 'Turks and Caicos Islands', dialCode: 1},
+      ru: {name: 'Russian Federation', dialCode: 7},
+      kz: {name: 'Kazakhstan', dialCode: 7},
+      eg: {name: 'Egypt', dialCode: 20},
+      za: {name: 'South Africa', dialCode: 27},
+      gr: {name: 'Greece', dialCode: 30},
+      nl: {name: 'Netherlands', dialCode: 31},
+      be: {name: 'Belgium', dialCode: 32},
+      fr: {name: 'France', dialCode: 33},
+      es: {name: 'Spain', dialCode: 34},
+      hu: {name: 'Hungary', dialCode: 36},
+      it: {name: 'Italy', dialCode: 39},
+      va: {name: 'Holy See (Vatican City State)', dialCode: 39},
+      ro: {name: 'Romania', dialCode: 40},
+      ch: {name: 'Switzerland', dialCode: 41},
+      at: {name: 'Austria', dialCode: 43},
+      gg: {name: 'Guernsey', dialCode: 44},
+      im: {name: 'Isle of Man', dialCode: 44},
+      je: {name: 'Jersey', dialCode: 44},
+      gb: {name: 'United Kingdom', dialCode: 44},
+      dk: {name: 'Denmark', dialCode: 45},
+      se: {name: 'Sweden', dialCode: 46},
+      no: {name: 'Norway', dialCode: 47},
+      sj: {name: 'Svalbard And Jan Mayen', dialCode: 47},
+      pl: {name: 'Poland', dialCode: 48},
+      de: {name: 'Germany', dialCode: 49},
+      pe: {name: 'Peru', dialCode: 51},
+      mx: {name: 'Mexico', dialCode: 52},
+      cu: {name: 'Cuba', dialCode: 53},
+      ar: {name: 'Argentina', dialCode: 54},
+      br: {name: 'Brazil', dialCode: 55},
+      cl: {name: 'Chile', dialCode: 56},
+      co: {name: 'Colombia', dialCode: 57},
+      ve: {name: 'Venezuela, Bolivarian Republic of', dialCode: 58},
+      my: {name: 'Malaysia', dialCode: 60},
+      cx: {name: 'Christmas Island', dialCode: 61},
+      cc: {name: 'Cocos (Keeling) Islands', dialCode: 61},
+      au: {name: 'Australia', dialCode: 61},
+      id: {name: 'Indonesia', dialCode: 62},
+      ph: {name: 'Philippines', dialCode: 63},
+      nz: {name: 'New Zealand', dialCode: 64},
+      sg: {name: 'Singapore', dialCode: 65},
+      th: {name: 'Thailand', dialCode: 66},
+      jp: {name: 'Japan', dialCode: 81},
+      kr: {name: 'Korea, Republic of', dialCode: 82},
+      vn: {name: 'Vietnam', dialCode: 84},
+      cn: {name: 'China', dialCode: 86},
+      tr: {name: 'Turkey', dialCode: 90},
+      in: {name: 'India', dialCode: 91},
+      pk: {name: 'Pakistan', dialCode: 92},
+      af: {name: 'Afghanistan', dialCode: 93},
+      lk: {name: 'Sri Lanka', dialCode: 94},
+      mm: {name: 'Myanmar', dialCode: 95},
+      ir: {name: 'Iran, Islamic Republic Of', dialCode: 98},
+      ss: {name: 'South Sudan', dialCode: 211},
+      ma: {name: 'Morocco', dialCode: 212},
+      eh: {name: 'Western Sahara', dialCode: 212},
+      dz: {name: 'Algeria', dialCode: 213},
+      tn: {name: 'Tunisia', dialCode: 216},
+      ly: {name: 'Libya', dialCode: 218},
+      gm: {name: 'Gambia', dialCode: 220},
+      sn: {name: 'Senegal', dialCode: 221},
+      mr: {name: 'Mauritania', dialCode: 222},
+      ml: {name: 'Mali', dialCode: 223},
+      gn: {name: 'Guinea', dialCode: 224},
+      ci: {name: 'Côte D\'Ivoire', dialCode: 225},
+      bf: {name: 'Burkina Faso', dialCode: 226},
+      ne: {name: 'Niger', dialCode: 227},
+      tg: {name: 'Togo', dialCode: 228},
+      bj: {name: 'Benin', dialCode: 229},
+      mu: {name: 'Mauritius', dialCode: 230},
+      lr: {name: 'Liberia', dialCode: 231},
+      sl: {name: 'Sierra Leone', dialCode: 232},
+      gh: {name: 'Ghana', dialCode: 233},
+      ng: {name: 'Nigeria', dialCode: 234},
+      td: {name: 'Chad', dialCode: 235},
+      cf: {name: 'Central African Republic', dialCode: 236},
+      cm: {name: 'Cameroon', dialCode: 237},
+      cv: {name: 'Cape Verde', dialCode: 238},
+      st: {name: 'Sao Tome and Principe', dialCode: 239},
+      gq: {name: 'Equatorial Guinea', dialCode: 240},
+      ga: {name: 'Gabon', dialCode: 241},
+      cg: {name: 'Congo', dialCode: 242},
+      cd: {name: 'Congo, The Democratic Republic Of The', dialCode: 243},
+      ao: {name: 'Angola', dialCode: 244},
+      gw: {name: 'Guinea-Bissau', dialCode: 245},
+      io: {name: 'British Indian Ocean Territory', dialCode: 246},
+      sc: {name: 'Seychelles', dialCode: 248},
+      sd: {name: 'Sudan', dialCode: 249},
+      rw: {name: 'Rwanda', dialCode: 250},
+      et: {name: 'Ethiopia', dialCode: 251},
+      so: {name: 'Somalia', dialCode: 252},
+      dj: {name: 'Djibouti', dialCode: 253},
+      ke: {name: 'Kenya', dialCode: 254},
+      tz: {name: 'Tanzania, United Republic of', dialCode: 255},
+      ug: {name: 'Uganda', dialCode: 256},
+      bi: {name: 'Burundi', dialCode: 257},
+      mz: {name: 'Mozambique', dialCode: 258},
+      zm: {name: 'Zambia', dialCode: 260},
+      mg: {name: 'Madagascar', dialCode: 261},
+      yt: {name: 'Mayotte', dialCode: 262},
+      re: {name: 'Réunion', dialCode: 262},
+      zw: {name: 'Zimbabwe', dialCode: 263},
+      na: {name: 'Namibia', dialCode: 264},
+      mw: {name: 'Malawi', dialCode: 265},
+      ls: {name: 'Lesotho', dialCode: 266},
+      bw: {name: 'Botswana', dialCode: 267},
+      sz: {name: 'Swaziland', dialCode: 268},
+      km: {name: 'Comoros', dialCode: 269},
+      sh: {name: 'Saint Helena', dialCode: 290},
+      er: {name: 'Eritrea', dialCode: 291},
+      aw: {name: 'Aruba', dialCode: 297},
+      fo: {name: 'Faroe Islands', dialCode: 298},
+      gl: {name: 'Greenland', dialCode: 299},
+      gi: {name: 'Gibraltar', dialCode: 350},
+      pt: {name: 'Portugal', dialCode: 351},
+      lu: {name: 'Luxembourg', dialCode: 352},
+      ie: {name: 'Ireland', dialCode: 353},
+      is: {name: 'Iceland', dialCode: 354},
+      al: {name: 'Albania', dialCode: 355},
+      mt: {name: 'Malta', dialCode: 356},
+      cy: {name: 'Cyprus', dialCode: 357},
+      ax: {name: 'Åland Islands', dialCode: 358},
+      fi: {name: 'Finland', dialCode: 358},
+      bg: {name: 'Bulgaria', dialCode: 359},
+      lt: {name: 'Lithuania', dialCode: 370},
+      lv: {name: 'Latvia', dialCode: 371},
+      ee: {name: 'Estonia', dialCode: 372},
+      md: {name: 'Moldova, Republic of', dialCode: 373},
+      am: {name: 'Armenia', dialCode: 374},
+      by: {name: 'Belarus', dialCode: 375},
+      ad: {name: 'Andorra', dialCode: 376},
+      mc: {name: 'Monaco', dialCode: 377},
+      sm: {name: 'San Marino', dialCode: 378},
+      ua: {name: 'Ukraine', dialCode: 380},
+      rs: {name: 'Serbia', dialCode: 381},
+      me: {name: 'Montenegro', dialCode: 382},
+      hr: {name: 'Croatia', dialCode: 385},
+      si: {name: 'Slovenia', dialCode: 386},
+      ba: {name: 'Bosnia and Herzegovina', dialCode: 387},
+      mk: {name: 'Macedonia, the Former Yugoslav Republic Of', dialCode: 389},
+      cz: {name: 'Czech Republic', dialCode: 420},
+      sk: {name: 'Slovakia', dialCode: 421},
+      li: {name: 'Liechtenstein', dialCode: 423},
+      gs: {name: 'South Georgia and the South Sandwich Islands', dialCode: 500},
+      fk: {name: 'Falkland Islands (Malvinas)', dialCode: 500},
+      bz: {name: 'Belize', dialCode: 501},
+      gt: {name: 'Guatemala', dialCode: 502},
+      sv: {name: 'El Salvador', dialCode: 503},
+      hn: {name: 'Honduras', dialCode: 504},
+      ni: {name: 'Nicaragua', dialCode: 505},
+      cr: {name: 'Costa Rica', dialCode: 506},
+      pa: {name: 'Panama', dialCode: 507},
+      pm: {name: 'Saint Pierre And Miquelon', dialCode: 508},
+      ht: {name: 'Haiti', dialCode: 509},
+      bl: {name: 'Saint Barthélemy', dialCode: 590},
+      mf: {name: 'Saint Martin', dialCode: 590},
+      gp: {name: 'Guadeloupe', dialCode: 590},
+      bo: {name: 'Bolivia', dialCode: 591},
+      gy: {name: 'Guyana', dialCode: 592},
+      ec: {name: 'Ecuador', dialCode: 593},
+      gf: {name: 'French Guiana', dialCode: 594},
+      py: {name: 'Paraguay', dialCode: 595},
+      mq: {name: 'Martinique', dialCode: 596},
+      sr: {name: 'Suriname', dialCode: 597},
+      uy: {name: 'Uruguay', dialCode: 598},
+      an: {name: 'Netherlands Antilles', dialCode: 599},
+      bq: {name: 'Bonaire, Sint Eustatius and Saba', dialCode: 599},
+      cw: {name: 'Curaçao', dialCode: 599},
+      tl: {name: 'Timor-Leste', dialCode: 670},
+      aq: {name: 'Antarctica', dialCode: 672},
+      nf: {name: 'Norfolk Island', dialCode: 672},
+      bn: {name: 'Brunei Darussalam', dialCode: 673},
+      nr: {name: 'Nauru', dialCode: 674},
+      pg: {name: 'Papua New Guinea', dialCode: 675},
+      to: {name: 'Tonga', dialCode: 676},
+      sb: {name: 'Solomon Islands', dialCode: 677},
+      vu: {name: 'Vanuatu', dialCode: 678},
+      fj: {name: 'Fiji', dialCode: 679},
+      pw: {name: 'Palau', dialCode: 680},
+      wf: {name: 'Wallis and Futuna', dialCode: 681},
+      ck: {name: 'Cook Islands', dialCode: 682},
+      nu: {name: 'Niue', dialCode: 683},
+      ws: {name: 'Samoa', dialCode: 685},
+      ki: {name: 'Kiribati', dialCode: 686},
+      nc: {name: 'New Caledonia', dialCode: 687},
+      tv: {name: 'Tuvalu', dialCode: 688},
+      pf: {name: 'French Polynesia', dialCode: 689},
+      tk: {name: 'Tokelau', dialCode: 690},
+      fm: {name: 'Micronesia, Federated States Of', dialCode: 691},
+      mh: {name: 'Marshall Islands', dialCode: 692},
+      kp: {name: 'Korea, Democratic People\'s Republic Of', dialCode: 850},
+      hk: {name: 'Hong Kong', dialCode: 852},
+      mo: {name: 'Macao', dialCode: 853},
+      kh: {name: 'Cambodia', dialCode: 855},
+      la: {name: 'Lao People\'s Democratic Republic', dialCode: 856},
+      bd: {name: 'Bangladesh', dialCode: 880},
+      tw: {name: 'Taiwan, Republic Of China', dialCode: 886},
+      mv: {name: 'Maldives', dialCode: 960},
+      lb: {name: 'Lebanon', dialCode: 961},
+      jo: {name: 'Jordan', dialCode: 962},
+      sy: {name: 'Syrian Arab Republic', dialCode: 963},
+      iq: {name: 'Iraq', dialCode: 964},
+      kw: {name: 'Kuwait', dialCode: 965},
+      sa: {name: 'Saudi Arabia', dialCode: 966},
+      ye: {name: 'Yemen', dialCode: 967},
+      om: {name: 'Oman', dialCode: 968},
+      ps: {name: 'Palestinian Territory, Occupied', dialCode: 970},
+      ae: {name: 'United Arab Emirates', dialCode: 971},
+      il: {name: 'Israel', dialCode: 972},
+      bh: {name: 'Bahrain', dialCode: 973},
+      qa: {name: 'Qatar', dialCode: 974},
+      bt: {name: 'Bhutan', dialCode: 975},
+      mn: {name: 'Mongolia', dialCode: 976},
+      np: {name: 'Nepal', dialCode: 977},
+      tj: {name: 'Tajikistan', dialCode: 992},
+      tm: {name: 'Turkmenistan', dialCode: 993},
+      az: {name: 'Azerbaijan', dialCode: 994},
+      ge: {name: 'Georgia', dialCode: 995},
+      kg: {name: 'Kyrgyzstan', dialCode: 996},
+      uz: {name: 'Uzbekistan', dialCode: 998},
+    };
+  }
+
+  public static countryCollection(): any[] {
+    let countries: any[] = _.map(VFieldHelper.COUNTRY_CODES, (v: {name: string, dialCode: number | string}, k: string) => {
+      if (k !== 'us') {
+        return [v.name, k.toUpperCase()];
+      }
+    });
+    return ([['United States', 'US']]).concat(countries);
+  }
+
   public static labelize(string?: any) {
     return s.titleize(VFieldHelper.hintize(string));
   }
@@ -393,7 +652,6 @@ export class VFieldHelper {
     }, fieldHelp);
     return fieldHelp;
   }
-
 
   public static buildGeneratedNames(
     input: string | number,
@@ -839,6 +1097,33 @@ export class VFieldHelper {
     .defaults(VFieldHelper.buildBaseApplicability('applicability')).value();
   }
 
+  public static buildYesCheckbox(changes?: VFieldInterface): VFieldInterface {
+    return _.chain(changes || {}).defaults({
+      label: 'Yes?',
+      display_name: 'Yes?',
+      hint: 'Yes?',
+      formatters: 'yes_checkbox',
+      js_formatters: 'isTrue',
+    }).defaults(VFieldHelper.buildBaseBoolean('yes_checkbox')).value();
+  }
+
+  public static buildBooleanFetchedInput(
+    input: string | number,
+    dependency?: string | number | null,
+    changes?: VFieldInterface): VFieldInterface {
+    dependency = ((VTools.isBlank(dependency) || input === dependency) ? null : dependency);
+    let fieldHelp: VFieldInterface = _.chain(changes || {}).defaults({
+      fill_approach: 'dynamic',
+      editable: false,
+      dependency: dependency,
+      dependency_value: !!dependency,
+    }).defaults(VFieldHelper.buildBaseBoolean(input)).value();
+    if (dependency) {
+      fieldHelp = VFieldHelper.setAltDependencies(fieldHelp, [[dependency]], [[true]]);
+    }
+    return fieldHelp
+  }
+
   public static buildGeneratedApplicability(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseApplicability(input, {hint: null})).value();
@@ -889,6 +1174,34 @@ export class VFieldHelper {
       ng_filter: 'date:mediumDate',
       js_formatters: 'formatDate',
     }, VFieldHelper.buildBase(input)));
+  }
+
+  public static buildDatepicker(changes?: VFieldInterface): VFieldInterface {
+    return _.defaults(changes || {}, VFieldHelper.buildBaseDatepicker((changes || {input_name: null}).input_name || 'datepicker'));
+  }
+
+  public static buildBaseDatetimepicker(input: string, changes?: VFieldInterface): VFieldInterface {
+    return _.chain(changes || {}).defaults({
+      hint: 'Select the date',
+      // placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
+      placeholder: 'YYYY-MM-DD',
+      type_cast: 'datetime',
+      input_html: {
+        class: 'no-default-date',
+        data: {behaviour: 'datetimepicker', date_format: 'yyyy-mm-dd'},
+      },
+      custom_input_size: '3',
+      display_with: 'format_datetime',
+      use_formatters: true,
+      formatters: 'format_datetime',
+      ng_filter: 'date:\'MMM d, y h:mm:ss a Z\':\'UTC\'',
+      // js_formatters: 'formatDate',
+      input_processors: ['coerce_to_datetime'],
+    }).defaults(VFieldHelper.buildBase(input)).value();
+  }
+
+  public static buildDatetimepicker(changes?: VFieldInterface): VFieldInterface {
+    return _.defaults(changes || {}, VFieldHelper.buildBaseDatetimepicker((changes || {input_name: null}).input_name || 'datetimepicker'));
   }
 
   public static buildGeneratedDate(input: string, changes?: VFieldInterface): VFieldInterface {
@@ -1109,99 +1422,14 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseDbTimestamp((changes || {input_name: null}).input_name || 'db_timestamp'));
   }
 
+  public static buildBaseSelect(input: string, changes?: VFieldInterface): VFieldInterface {
+    return _.chain(changes || {}).defaults({
+      placeholder: null,
+      as: null,
+    }).defaults(VFieldHelper.buildBase(input)).value();
+  }
+
   constructor() {
   }
 
 }
-
-// public static get_default_country_collection(opts={})
-//   ([['United States', 'US']] +
-// (ISO3166::Country.codes.map {|country_code|
-  // [ISO3166::Country[country_code].name, country_code] } -
-// [['United States', 'US']]))
-// end
-
-//   public static buildBase_select(input, changes = {})
-//     buildBase(input).merge(
-//       placeholder: nil,
-//       as: nil,
-//     ).merge(changes)
-//   end
-
-//   public static build_yes_checkbox(changes = {})
-//     buildBase_boolean(:yes_checkbox, {
-//       label: 'Yes?',
-//       display_name: 'Yes?',
-//       hint: 'Yes?',
-//       formatters: 'yes_checkbox',
-//       js_formatters: 'isTrue',
-//     }).merge(changes)
-//   end
-
-//   public static build_boolean_fetched_input(input, dependency, changes = {})
-//     dependency = ((dependency.blank? || input.to_s == dependency.to_s) ? nil : dependency)
-//     names_hash = build_generated_rights_names(input)
-//     fieldHelp = buildBase_boolean(input, names_hash.merge(
-//       fill_approach: 'dynamic',
-//       editable: false,
-//       dependency: dependency,
-//       dependency_value: !!dependency,
-//     )).merge(changes)
-//     fieldHelp = setAltDependencies(fieldHelp, [[dependency]], [[true]]) if dependency
-//     fieldHelp
-//   end
-
-//   public static build_datepicker(changes = {})
-//     buildBase_datepicker(:datepicker, changes)
-//   end
-
-//   public static buildBase_datetimepicker(input, changes = {})
-//     buildBase(input).merge(
-//       hint: 'Select the date',
-//       placeholder: 'E.g., ' + DateTime.now.utc.to_datetime.strftime('%Y-%m-%d'),
-//       type_cast: 'datetime',
-//       input_html: {
-//   class: 'no-default-date',
-//   data: {behaviour: 'datetimepicker', date_format: 'yyyy-mm-dd'}
-// },
-//       custom_input_size: '3',
-//       display_with: 'format_datetime',
-//       ng_filter: 'date:\'MMM d, y h:mm:ss a Z\':\'UTC\'',
-//       use_formatters: true,
-//       formatters: 'format_datetime',
-//       # js_formatters: 'formatDate',
-//       input_processors: ['coerce_to_datetime'],
-//     ).merge(changes)
-//   end
-
-//   public static build_datetimepicker(changes = {})
-//     buildBase_datetimepicker(:datetimepicker, changes)
-//   end
-
-//   public static buildBase_compounding(input, changes = {})
-//     buildBase_select(input).merge(
-//       custom_input_size: '4',
-//       other_input_options:  {
-//   collection: CapSpecs::COMPOUNDING_FORMULAS,
-//   value_method: :first,
-//   label_method: :last,
-//   include_blank: 'Select Compounding'
-// },
-//       ng_filter: 'compounding',
-//       js_formatters: 'compounding',
-//     ).merge(changes)
-//   end
-
-//   public static buildBase_provision_type(input, changes = {})
-//     buildBase_select(input).merge(
-//       custom_input_size: '4',
-//       other_input_options: {
-  // collection: CapSpecs.standard_provisions_collection,
-  // value_method: :first,
-  // label_method: :last,
-  // include_blank: 'Select Provision/Right Type'
-// },
-//       ng_filter: 'provisions',
-//       js_formatters: 'provisions',
-//     ).merge(changes)
-//   end

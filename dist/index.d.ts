@@ -59,6 +59,8 @@ export declare class VFieldHelper {
     static readonly V_FIELD_TYPES_COLLECTION: any;
     static readonly V_FIELD_HELPER_MAP: any;
     static readonly EDITABLE_V_FIELD_HELPER_ATTS: string[];
+    static readonly COUNTRY_CODES: {};
+    static countryCollection(): any[];
     static labelize(string?: any): string;
     static hintize(string?: any): string;
     static fieldToLabel(str: string, label?: boolean): string;
@@ -258,11 +260,16 @@ export declare class VFieldHelper {
     static buildBaseBoolean(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildBaseApplicability(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildApplicability(changes?: VFieldInterface): VFieldInterface;
+    static buildYesCheckbox(changes?: VFieldInterface): VFieldInterface;
+    static buildBooleanFetchedInput(input: string | number, dependency?: string | number | null, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedApplicability(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedElseApplicability(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildFormCopy(changes?: VFieldInterface): VFieldInterface;
     static buildAnnotatedCopy(changes?: VFieldInterface): VFieldInterface;
     static buildBaseDatepicker(input: string | number, changes?: VFieldInterface): VFieldInterface;
+    static buildDatepicker(changes?: VFieldInterface): VFieldInterface;
+    static buildBaseDatetimepicker(input: string, changes?: VFieldInterface): VFieldInterface;
+    static buildDatetimepicker(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedDate(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildBaseOrgState(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildOrgState(changes?: VFieldInterface): VFieldInterface;
@@ -292,5 +299,6 @@ export declare class VFieldHelper {
     static buildDbKey(changes?: VFieldInterface): VFieldInterface;
     static buildBaseDbTimestamp(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildDbTimestamp(changes?: VFieldInterface): VFieldInterface;
+    static buildBaseSelect(input: string, changes?: VFieldInterface): VFieldInterface;
     constructor();
 }

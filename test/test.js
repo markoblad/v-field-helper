@@ -15,6 +15,10 @@ describe('VFieldHelper functions test', () => {
     var result = VFieldHelper.positiveDecimalMask();
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')])); // TODO: check this for decimals
   });
+  it('should get positiveDecimalMask', () => {
+    var result = VFieldHelper.positiveDecimalMask();
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')])); // TODO: check this for decimals
+  });
   it('should get positiveIntegerMask', () => {
     var result = VFieldHelper.positiveIntegerMask();
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')]));
@@ -44,6 +48,14 @@ describe('VFieldHelper functions test', () => {
   it('should get EDITABLE_V_FIELD_HELPER_ATTS', () => {
     var result = VFieldHelper.EDITABLE_V_FIELD_HELPER_ATTS;
     expect(result[0]).to.equal('label');
+  });
+  it('should get COUNTRY_CODES', () => {
+    var result = VFieldHelper.COUNTRY_CODES;
+    expect(result.us.name).to.equal('United States'); // TODO: check this for decimals
+  });
+  it('should get countryCollection', () => {
+    var result = VFieldHelper.countryCollection();
+    expect(result[0].toString()).to.equal(['United States', 'US'].toString()); // TODO: check this for decimals
   });
   it('should get labelize', () => {
     var result = VFieldHelper.labelize('1 2 3_markPaulABC-def $100.00');
@@ -1402,15 +1414,53 @@ describe('VFieldHelper functions test', () => {
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
   });
-
-  it('should return buildGeneratedApplicability for various', () => {
+  it('should return buildYesCheckbox for various', () => {
     var result = [
-      VFieldHelper.buildGeneratedApplicability('purchaser'),
+      VFieldHelper.buildYesCheckbox(),
     ];
     var expectation = [
       {
-        hint: null,
-        field_type: 'applicability',
+        label: 'Yes?',
+        display_name: 'Yes?',
+        hint: 'Yes?',
+        formatters: 'yes_checkbox',
+        js_formatters: 'isTrue',
+
+        type_cast: 'boolean',
+        as: 'boolean_buttons',
+        bip_as: 'checkbox',
+        input_html: {data: {default_value: false}},
+        display_with: 'bool',
+        ng_filter: 'check',
+        use_formatters: true,
+        input_processors: ['is_true'],
+
+        input_name: 'yes_checkbox',
+        terse_display_name: 'Yes Checkbox?',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBooleanFetchedInput for various', () => {
+    var result = [
+      VFieldHelper.buildBooleanFetchedInput('purchaser',
+        'some_field', true),
+    ];
+    var expectation = [
+      {
+        input_html: '[Object, object]',
+        alt_dependencies: 'some_field',
+        alt_dependency_values: true,
+        fill_approach: 'dynamic',
+        editable: false,
+        dependency: 'some_field',
+        dependency_value: true,
+
         type_cast: 'boolean',
         as: 'boolean_buttons',
         bip_as: 'checkbox',
@@ -1426,9 +1476,9 @@ describe('VFieldHelper functions test', () => {
         label: 'Purchaser?',
         display_name: 'Purchaser?',
         terse_display_name: 'Purchaser?',
+        hint: 'Purchaser?',
+
         required: false,
-        editable: true,
-        fill_approach: 'manual',
         display: true,
         default_visible: true,
       },
@@ -1543,25 +1593,130 @@ describe('VFieldHelper functions test', () => {
     ];
     var expectation = [
       {
-      hint: 'Select the date',
-      field_type: 'date',
-      placeholder: 'YYYY-MM-DD',
-      type_cast: 'date',
-      input_html: {
-         class: 'col-sm-3 no-default-date inputmask-date',
-         data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}
-      },
-      custom_input_size: '3',
-      display_with: 'format_date',
-      use_formatters: true,
-      formatters: 'format_date',
-      ng_filter: 'date:mediumDate',
-      js_formatters: 'formatDate',
+        hint: 'Select the date',
+        field_type: 'date',
+        placeholder: 'YYYY-MM-DD',
+        type_cast: 'date',
+        input_html: {
+           class: 'col-sm-3 no-default-date inputmask-date',
+           data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}
+        },
+        custom_input_size: '3',
+        display_with: 'format_date',
+        use_formatters: true,
+        formatters: 'format_date',
+        ng_filter: 'date:mediumDate',
+        js_formatters: 'formatDate',
       
         input_name: 'purchaser',
         label: 'Purchaser',
         display_name: 'Purchaser',
         terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDatepicker for various', () => {
+    var result = [
+      VFieldHelper.buildDatepicker(),
+    ];
+    var expectation = [
+      {
+        field_type: 'date',
+        placeholder: 'YYYY-MM-DD',
+        type_cast: 'date',
+        input_html: {
+           class: 'col-sm-3 no-default-date inputmask-date',
+           data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}
+        },
+        custom_input_size: '3',
+        display_with: 'format_date',
+        use_formatters: true,
+        formatters: 'format_date',
+        ng_filter: 'date:mediumDate',
+        js_formatters: 'formatDate',
+
+        input_name: 'datepicker',
+        label: 'Datepicker',
+        display_name: 'Datepicker',
+        terse_display_name: 'Datepicker',
+        hint: 'Datepicker',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseDatetimepicker for various', () => {
+    var result = [
+      VFieldHelper.buildBaseDatetimepicker('purchaser'),
+    ];
+    var expectation = [
+      {
+        hint: 'Select the date',
+        placeholder: 'YYYY-MM-DD',
+        type_cast: 'datetime',
+        input_html: {
+          class: 'no-default-date',
+          data: {behaviour: 'datetimepicker', date_format: 'yyyy-mm-dd'},
+        },
+        custom_input_size: '3',
+        display_with: 'format_datetime',
+        use_formatters: true,
+        formatters: 'format_datetime',
+        ng_filter: 'date:\'MMM d, y h:mm:ss a Z\':\'UTC\'',
+        // js_formatters: 'formatDate',
+        input_processors: ['coerce_to_datetime'],
+
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        required: false,
+        editable: true,
+        as: 'string',
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildDatetimepicker for various', () => {
+    var result = [
+      VFieldHelper.buildDatetimepicker(),
+    ];
+    var expectation = [
+      {
+        hint: 'Select the date',
+        placeholder: 'YYYY-MM-DD',
+        type_cast: 'datetime',
+        input_html: {
+          class: 'no-default-date',
+          data: {behaviour: 'datetimepicker', date_format: 'yyyy-mm-dd'},
+        },
+        custom_input_size: '3',
+        display_with: 'format_datetime',
+        use_formatters: true,
+        formatters: 'format_datetime',
+        ng_filter: 'date:\'MMM d, y h:mm:ss a Z\':\'UTC\'',
+        // js_formatters: 'formatDate',
+        input_processors: ['coerce_to_datetime'],
+
+        input_name: 'datetimepicker',
+        label: 'Datetimepicker',
+        display_name: 'Datetimepicker',
+        terse_display_name: 'Datetimepicker',
         required: false,
         editable: true,
         as: 'string',
@@ -2300,6 +2455,28 @@ describe('VFieldHelper functions test', () => {
         required: false,
         verbose_display_name: 'Entry Db Timestamp',
         as: 'string',
+      },
+    ];
+    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+  });
+  it('should return buildBaseSelect for various', () => {
+    var result = [
+      VFieldHelper.buildBaseSelect('purchaser'),
+    ];
+    var expectation = [
+      {
+        placeholder: null,
+        as: null,
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser',
+        required: false,
+        editable: true,
+        fill_approach: 'manual',
+        display: true,
+        default_visible: true,
       },
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
