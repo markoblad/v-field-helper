@@ -15,7 +15,7 @@ export interface VFieldInterface {
   hint?: string | null;
   more_info?: string | string[] | null;
   placeholder?: string | null;
-  security_types?: string | string[] | null;
+  security_types?: number[] | string | string[] | null;
   default_visible?: string | boolean | null;
   fill_approach?: string | null;
   dynamic_fill_approach_v_asset_types?: string[] | null;
@@ -40,6 +40,7 @@ export interface VFieldInterface {
   input_formatters?: string | string [] | null;
   js_formatters?: string | string[] | null;
   input_processor?: string | string[] | null;
+  input_processors?: string | string[] | null;
   dependency?: string | null;
   dependency_value?: string | null;
   dependencies?: string | string[] | null;
@@ -326,6 +327,7 @@ export class VFieldHelper {
       input_formatters: {},
       js_formatters: {},
       input_processor: {},
+      input_processors: {},
       dependency: {},
       dependency_value: {},
     };
