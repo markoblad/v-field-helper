@@ -40,6 +40,12 @@ export interface VFieldInterface {
     dependency_values?: any | any[] | null;
     alt_dependencies?: string | string[] | null;
     alt_dependency_values?: any | any[] | null;
+    source_path?: any;
+    general_search_ac_name_att?: string | null;
+    template_package?: string | null;
+    insert_id?: boolean | null;
+    readonlyDefault?: boolean | null;
+    optional_input?: boolean | null;
 }
 export interface VFieldSubTypeHash {
     vInputType: string;

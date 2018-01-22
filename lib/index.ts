@@ -47,6 +47,12 @@ export interface VFieldInterface {
   dependency_values?: any | any[] | null;
   alt_dependencies?: string | string[] | null;
   alt_dependency_values?: any | any[] | null;
+  source_path?: any;
+  general_search_ac_name_att?: string | null;
+  template_package?: string | null;
+  insert_id?: boolean | null;
+  readonlyDefault?: boolean | null;
+  optional_input?: boolean | null;
 }
 
 export interface VFieldSubTypeHash {
@@ -347,6 +353,16 @@ export class VFieldHelper {
       input_processors: {},
       dependency: {},
       dependency_value: {},
+      dependencies: {},
+      dependency_values: {},
+      alt_dependencies: {},
+      alt_dependency_values: {},
+      source_path: {},
+      general_search_ac_name_att: {},
+      template_package: {},
+      insert_id: {},
+      readonlyDefault: {},
+      optional_input: {},
     };
   }
 
