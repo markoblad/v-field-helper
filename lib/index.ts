@@ -62,6 +62,11 @@ export interface VFieldSubTypeHash {
 
 export class VFieldHelper {
 
+  public static buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
+  public static buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
+  public static buildPercThreshold = VFieldHelper.buildPercentThreshold;
+  public static buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
+
   public static get positiveDecimalMask(): any {
     return createNumberMask({
       prefix: '',
@@ -74,7 +79,7 @@ export class VFieldHelper {
       // requireDecimal: false,
       // allowNegative: false,
     });
-  };
+  }
 
   public static get positiveIntegerMask(): any {
     return createNumberMask({
@@ -88,16 +93,15 @@ export class VFieldHelper {
       // requireDecimal: false,
       // allowNegative: false,
     });
-  };
+  }
 
   public static positiveIntegerUnmask(value?: string | number | null): number {
-    return parseInt((value || 0).toString().trim().replace(/\..*/g, '').replace(/[^\d]/g, ''));
-  };
+    return parseInt((value || 0).toString().trim().replace(/\..*/g, '').replace(/[^\d]/g, ''), 10);
+  }
 
   public static positiveDecimalUnmask(value?: string | number | null): number {
     return parseFloat((value || 0).toString().trim().replace(/[^\d\.]/g, ''));
-  };
-
+  }
 
   public static get V_FIELD_TYPES(): any {return {
       basic_input: {
@@ -120,7 +124,7 @@ export class VFieldHelper {
         label: 'Date',
         hint: 'Date',
         editable: true,
-        textMask: function() {
+        textMask: () => {
           return [/\d/, /\d/, /\d/, /\d/, '-', /[01]/, /\d/, '-', /[0123]/, /\d/];
         }
       },
@@ -150,7 +154,9 @@ export class VFieldHelper {
         //   return VFieldHelper.preciseDollarDecimalMask(value);
         // },
         // textMask: createNumberMask({}),
-        // public get autoCorrectedDatePipe(): any { return createAutoCorrectedDatePipe('mm/dd/yyyy'); }
+        // public get autoCorrectedDatePipe(): any {
+        //   return createAutoCorrectedDatePipe('mm/dd/yyyy');
+        // }
         textUnmask: VFieldHelper.positiveDecimalUnmask,
       },
       positive_integer: {
@@ -247,13 +253,24 @@ export class VFieldHelper {
   }
 
   public static get V_FIELD_TYPES_COLLECTION(): any {
-    return _.reduce(VFieldHelper.V_FIELD_TYPES, (memo: any[],
-    obj: {editable?: boolean, label?: string, display_name?: string}, k: string) => {
-      if (obj.editable) {
-        memo.push([k, obj.label || obj.display_name]);
-      }
-      return memo;
-    }, []);
+    return _.reduce(
+      VFieldHelper.V_FIELD_TYPES,
+      (
+        memo: any[],
+        obj: {
+          editable?: boolean,
+          label?: string,
+          display_name?: string
+        },
+        k: string
+      ) => {
+        if (obj.editable) {
+          memo.push([k, obj.label || obj.display_name]);
+        }
+        return memo;
+      },
+      []
+    );
   }
 
   public static get V_FIELD_HELPER_MAP(): any {return {
@@ -338,7 +355,7 @@ export class VFieldHelper {
     'hint',
     'more_info',
     'placeholder',
-  ]; };
+  ]; }
 
   public static get COUNTRY_CODES(): {} { return {
       us: {name: 'United States', dialCode: 1},
@@ -590,26 +607,32 @@ export class VFieldHelper {
   }
 
   public static countryCollection(): any[] {
-    let countries: any[] = _.map(VFieldHelper.COUNTRY_CODES, (v: {name: string, dialCode: number | string}, k: string) => {
-      if (k !== 'us') {
-        return [v.name, k.toUpperCase()];
+    const countries: any[] = _.map(
+      VFieldHelper.COUNTRY_CODES,
+      (v: {name: string, dialCode: number | string}, k: string) => {
+        if (k !== 'us') {
+          return [v.name, k.toUpperCase()];
+        }
       }
-    });
+    );
     return ([['United States', 'US']]).concat(countries);
   }
 
-  public static labelize(string?: any) {
-    return s.titleize(VFieldHelper.hintize(string));
+  public static labelize(str: any): string {
+    return s.titleize(VFieldHelper.hintize(str));
   }
 
-  public static hintize(string?: any) {
-    return s.capitalize(s.underscored((string || '').toString()).split(/\_|(\W)/).join(' ').replace(/\s+/g, ' '));
+  public static hintize(str: any): string {
+    return s.capitalize(
+      s.underscored((str || '').toString())
+      .split(/\_|(\W)/).join(' ').replace(/\s+/g, ' ')
+    );
   }
 
   public static fieldToLabel(str: string, label: boolean = true): string {
     str = (str || '').toString().toLowerCase();
-    if ((/\_hashed\_/g).test(str)) { str = str.split(/\_hashed\_/g).slice(1).join('_hashed_'); };
-    if ((/\_hashes$/g).test(str)) { str = pluralize(str.replace(/\_hashes$/g, '')); };
+    if ((/\_hashed\_/g).test(str)) { str = str.split(/\_hashed\_/g).slice(1).join('_hashed_'); }
+    if ((/\_hashes$/g).test(str)) { str = pluralize(str.replace(/\_hashes$/g, '')); }
     if ((/\_hashes\_summed\_/g).test(str)) {
       str = 'sum_of_' + pluralize(str.split(/\_hashes\_/)[0]) +
       '_' + str.split(/\_hashes\_summed\_/).slice(1).join('_hashes_');
@@ -624,8 +647,8 @@ export class VFieldHelper {
   ): VFieldInterface {
     options = _.defaults(options || {}, {});
     if (VTools.isObject(dataAttsHash) && VTools.isObject(fieldHelp)) {
-      let inputHTML: {data?: {}} = fieldHelp.input_html || {};
-      let inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
+      const inputHTML: {data?: {}} = fieldHelp.input_html || {};
+      const inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
       inputHTML.data = inputHTMLData;
       fieldHelp.input_html = inputHTML;
     }
@@ -637,8 +660,8 @@ export class VFieldHelper {
     altDependencies: any, altDependencyValues: any
   ): VFieldInterface {
     fieldHelp = fieldHelp || {};
-    let inputHtml = fieldHelp.input_html || {};
-    let inputHtmlClass = ((inputHtml.class || '') +  ' isDependent').trim();
+    const inputHtml = fieldHelp.input_html || {};
+    const inputHtmlClass = ((inputHtml.class || '') +  ' isDependent').trim();
     inputHtml.class = inputHtmlClass;
     let inputHTMLData = inputHtml.data || {};
     inputHTMLData = _.defaults({
@@ -670,8 +693,11 @@ export class VFieldHelper {
   ): VFieldInterface {
     options = _.defaults(options || {}, {});
     changes = _.defaults(changes || {}, {});
-    let name: string, label: string;
-    let terse_display_name: string, verbose_display_name: string = '', hint: string;
+    let name: string;
+    let label: string;
+    let terseDisplayName: string;
+    let verboseDisplayName: string = '';
+    let hint: string;
     name = VTools.makeString(changes.input_name || input);
     if (options.question) {
       name = name.replace(/^(?:ha|i)s\_/g, '')
@@ -706,32 +732,38 @@ export class VFieldHelper {
     }
     if (options.db_timestamp) {
       hint += ' (DB timestamp)';
-      verbose_display_name = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
+      verboseDisplayName = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
     }
-    terse_display_name = label;
+    terseDisplayName = label;
     if (options.percent) {
-      terse_display_name = terse_display_name.replace(/percentage/ig, '%');
+      terseDisplayName = terseDisplayName.replace(/percentage/ig, '%');
     }
 
-    let generatedNames: VFieldInterface = {
+    const generatedNames: VFieldInterface = {
       input_name: input.toString(),
-      label: label,
+      label,
       display_name: label,
-      terse_display_name,
-      hint: hint,
+      terse_display_name: terseDisplayName,
+      hint,
       required: false,
     };
-    if (verbose_display_name) {
-      generatedNames.verbose_display_name = verbose_display_name;
+    if (verboseDisplayName) {
+      generatedNames.verbose_display_name = verboseDisplayName;
     }
     return _.defaults(changes, generatedNames);
   }
 
-  public static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildGeneratedPercentNames(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return VFieldHelper.buildGeneratedNames(input, changes, {percent: true});
   }
 
-  public static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildGeneratedPercentThresholdNames(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return VFieldHelper.buildGeneratedNames(input, changes, {percent_threshold: true});
   }
 
@@ -801,7 +833,10 @@ export class VFieldHelper {
   // ac
   // relation
 
-  public static buildBaseString(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseString(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       placeholder: 'Type value_',
       custom_input_size: '4',
@@ -809,7 +844,10 @@ export class VFieldHelper {
   }
 
   public static buildString(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, VFieldHelper.buildBaseString((changes || {input_name: null}).input_name || 'value'));
+    return _.defaults(
+      changes || {},
+      VFieldHelper.buildBaseString((changes || {input_name: null}).input_name || 'value')
+    );
   }
 
   public static buildGeneratedString(
@@ -819,7 +857,10 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseString(input, {hint: null}));
   }
 
-  public static buildBaseTextarea(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseTextarea(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'textarea',
       placeholder: 'Type detail_',
@@ -914,7 +955,10 @@ export class VFieldHelper {
     }).defaults(VFieldHelper.buildBasePositiveDecimal(input, {hint: null})).value();
   }
 
-  public static buildBaseDollarInteger(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDollarInteger(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'dollar_integer',
       placeholder: 'E.g., 40,000',
@@ -935,12 +979,18 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseDollarInteger('dollar_amount'));
   }
 
-  public static buildGeneratedDollarInteger(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedDollarInteger(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseDollarInteger(input, {hint: null})).value();
   }
 
-  public static buildBaseDollarDecimal(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDollarDecimal(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'dollar_precise_decimal',
       placeholder: 'E.g., 0.0001',
@@ -972,7 +1022,10 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseDollarDecimal('cents_dollar_amount'));
   }
 
-  public static buildGeneratedDollarDecimal(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedDollarDecimal(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseDollarDecimal(input, {hint: null})).value();
   }
@@ -998,7 +1051,10 @@ export class VFieldHelper {
     return VFieldHelper.buildBasePercent('percent', changes);
   }
 
-  public static buildGeneratedPercent(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedPercent(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBasePercent(input, {hint: null})).value();
   }
@@ -1052,18 +1108,18 @@ export class VFieldHelper {
     }).defaults(VFieldHelper.buildGeneratedPercentThresholdNames(input))
     .defaults(VFieldHelper.buildBase(input)).value();
   }
-  public static buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
 
   public static buildPercentThreshold(changes = {}) {
     return VFieldHelper.buildBasePercentThreshold('percent_threshold', changes);
   }
-  public static buildPercThreshold = VFieldHelper.buildPercentThreshold;
 
-  public static buildGeneratedPercentThreshold(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedPercentThreshold(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBasePercentThreshold(input, {})).value();
   }
-  public static buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
 
   public static buildBaseBoolean(
     input: string | number,
@@ -1117,21 +1173,27 @@ export class VFieldHelper {
     let fieldHelp: VFieldInterface = _.chain(changes || {}).defaults({
       fill_approach: 'dynamic',
       editable: false,
-      dependency: dependency,
+      dependency,
       dependency_value: !!dependency,
     }).defaults(VFieldHelper.buildBaseBoolean(input)).value();
     if (dependency) {
       fieldHelp = VFieldHelper.setAltDependencies(fieldHelp, [[dependency]], [[true]]);
     }
-    return fieldHelp
+    return fieldHelp;
   }
 
-  public static buildGeneratedApplicability(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedApplicability(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseApplicability(input, {hint: null})).value();
   }
 
-  public static buildGeneratedElseApplicability(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedElseApplicability(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseApplicability(input, {hint: null})).value();
   }
@@ -1159,7 +1221,10 @@ export class VFieldHelper {
     }).defaults(VFieldHelper.buildApplicability()).value();
   }
 
-  public static buildBaseDatepicker(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDatepicker(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.defaults(changes, _.defaults({
       field_type: 'date',
       // placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
@@ -1179,10 +1244,16 @@ export class VFieldHelper {
   }
 
   public static buildDatepicker(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, VFieldHelper.buildBaseDatepicker((changes || {input_name: null}).input_name || 'datepicker'));
+    return _.defaults(
+      changes || {},
+      VFieldHelper.buildBaseDatepicker((changes || {input_name: null}).input_name || 'datepicker')
+    );
   }
 
-  public static buildBaseDatetimepicker(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDatetimepicker(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       hint: 'Select the date',
       // placeholder: 'E.g., ' + moment().format('YYYY-MM-DD'),
@@ -1203,18 +1274,29 @@ export class VFieldHelper {
   }
 
   public static buildDatetimepicker(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, VFieldHelper.buildBaseDatetimepicker((changes || {input_name: null}).input_name || 'datetimepicker'));
+    return _.defaults(
+      changes || {},
+      VFieldHelper.buildBaseDatetimepicker(
+        (changes || {input_name: null}).input_name || 'datetimepicker'
+      )
+    );
   }
 
-  public static buildGeneratedDate(input: string, changes?: VFieldInterface): VFieldInterface {
-    let name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
+  public static buildGeneratedDate(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
+    // const name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
     return _.defaults(changes, VFieldHelper.buildBaseDatepicker(input.toString(), {
       // label: name === 'date' ? 'Date' : (VFieldHelper.fieldToLabel(name) + ' Date'),
       hint: 'Select the date',
     }));
   }
 
-  public static buildBaseOrgState(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseOrgState(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'organization_state',
       fill_approach: 'manual',
@@ -1237,12 +1319,18 @@ export class VFieldHelper {
     })).value();
   }
 
-  public static buildGeneratedOrgState(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedOrgState(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseOrgState(input, {})).value();
   }
 
-  public static buildBaseAcState(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseAcState(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'state_or_place',
       placeholder: 'Select or Type State or Place',
@@ -1259,12 +1347,18 @@ export class VFieldHelper {
     return VFieldHelper.buildBaseAcState('state_or_place', changes);
   }
 
-  public static buildGeneratedAcState(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedAcState(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseAcState(input, {})).value();
   }
 
-  public static buildBaseAcOrgType(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseAcOrgType(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'entity_type',
       placeholder: 'Select or Type Entity Type',
@@ -1280,14 +1374,18 @@ export class VFieldHelper {
     return VFieldHelper.buildBaseAcOrgType('entity_or_org_type', changes);
   }
 
-  public static buildGeneratedACOrgType(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedACOrgType(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseAcOrgType(input, {hint: null})).value();
   }
 
-  public static buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
-
-  public static buildBaseAcSecurityName(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseAcSecurityName(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       // field_type: 'security_name',
       label: 'Security Name',
@@ -1304,12 +1402,18 @@ export class VFieldHelper {
     return VFieldHelper.buildBaseAcSecurityName('security_name', changes);
   }
 
-  public static buildGeneratedAcSecurityName(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedAcSecurityName(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBaseAcSecurityName(input, {})).value();
   }
 
-  public static buildBasePeriodType(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBasePeriodType(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'period_type',
       placeholder: 'Select Period Type',
@@ -1326,12 +1430,18 @@ export class VFieldHelper {
     return VFieldHelper.buildBasePeriodType('period_type', changes);
   }
 
-  public static buildGeneratedPeriodType(input: string | number, changes: VFieldInterface = {}): VFieldInterface {
+  public static buildGeneratedPeriodType(
+    input: string | number,
+    changes: VFieldInterface = {}
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
     }).defaults(VFieldHelper.buildBasePeriodType(input, {hint: null})).value();
   }
 
-  public static buildGeneratedVSig(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildGeneratedVSig(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'v_sig',
       fill_approach: 'dynamic',
@@ -1339,7 +1449,10 @@ export class VFieldHelper {
     }).defaults(VFieldHelper.buildBase(input)).value();
   }
 
-  public static buildBaseObjectHashes(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseObjectHashes(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'hashes',
       fill_approach: 'dynamic',
@@ -1360,7 +1473,10 @@ export class VFieldHelper {
     return _.defaults(changes || {}, VFieldHelper.buildBaseObjectHashes(input, {hint: null}));
   }
 
-  public static buildBaseVirtualModelHashes(input: string | number, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseVirtualModelHashes(
+    input: string | number,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       field_type: 'hashes',
       fill_approach: 'virtual_model',
@@ -1388,14 +1504,20 @@ export class VFieldHelper {
     .defaults(VFieldHelper.buildBaseVirtualModelHashes(input, changes)).value();
   }
 
-  public static buildHashesSummedBase(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildHashesSummedBase(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes).defaults({
       fill_approach: 'dynamic',
       editable: false,
     }).defaults(VFieldHelper.buildBase(input)).value();
   }
 
-  public static buildBaseDbKey(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDbKey(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       placeholder: 'E.g., 123',
       fill_approach: 'dynamic',
@@ -1407,10 +1529,16 @@ export class VFieldHelper {
   }
 
   public static buildDbKey(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, VFieldHelper.buildBaseDbKey((changes || {input_name: null}).input_name || 'db_key'));
+    return _.defaults(
+      changes || {},
+      VFieldHelper.buildBaseDbKey((changes || {input_name: null}).input_name || 'db_key')
+    );
   }
 
-  public static buildBaseDbTimestamp(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseDbTimestamp(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       fill_approach: 'dynamic',
       other_input_options: {readonly: true},
@@ -1421,17 +1549,21 @@ export class VFieldHelper {
   }
 
   public static buildDbTimestamp(changes?: VFieldInterface): VFieldInterface {
-    return _.defaults(changes || {}, VFieldHelper.buildBaseDbTimestamp((changes || {input_name: null}).input_name || 'db_timestamp'));
+    return _.defaults(changes || {},
+      VFieldHelper.buildBaseDbTimestamp(
+        (changes || {input_name: null}).input_name || 'db_timestamp'
+      )
+    );
   }
 
-  public static buildBaseSelect(input: string, changes?: VFieldInterface): VFieldInterface {
+  public static buildBaseSelect(
+    input: string,
+    changes?: VFieldInterface
+  ): VFieldInterface {
     return _.chain(changes || {}).defaults({
       placeholder: null,
       as: null,
     }).defaults(VFieldHelper.buildBase(input)).value();
-  }
-
-  constructor() {
   }
 
 }

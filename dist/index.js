@@ -23,7 +23,6 @@ var VFieldHelper = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     Object.defineProperty(VFieldHelper, "positiveIntegerMask", {
         get: function () {
             return createNumberMask_1.default({
@@ -37,15 +36,12 @@ var VFieldHelper = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     VFieldHelper.positiveIntegerUnmask = function (value) {
-        return parseInt((value || 0).toString().trim().replace(/\..*/g, '').replace(/[^\d]/g, ''));
+        return parseInt((value || 0).toString().trim().replace(/\..*/g, '').replace(/[^\d]/g, ''), 10);
     };
-    ;
     VFieldHelper.positiveDecimalUnmask = function (value) {
         return parseFloat((value || 0).toString().trim().replace(/[^\d\.]/g, ''));
     };
-    ;
     Object.defineProperty(VFieldHelper, "V_FIELD_TYPES", {
         get: function () {
             return {
@@ -96,7 +92,9 @@ var VFieldHelper = /** @class */ (function () {
                     //   return VFieldHelper.preciseDollarDecimalMask(value);
                     // },
                     // textMask: createNumberMask({}),
-                    // public get autoCorrectedDatePipe(): any { return createAutoCorrectedDatePipe('mm/dd/yyyy'); }
+                    // public get autoCorrectedDatePipe(): any {
+                    //   return createAutoCorrectedDatePipe('mm/dd/yyyy');
+                    // }
                     textUnmask: VFieldHelper.positiveDecimalUnmask,
                 },
                 positive_integer: {
@@ -279,6 +277,7 @@ var VFieldHelper = /** @class */ (function () {
                 input_formatters: {},
                 js_formatters: {},
                 input_processor: {},
+                input_processors: {},
                 dependency: {},
                 dependency_value: {},
             };
@@ -298,7 +297,6 @@ var VFieldHelper = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     Object.defineProperty(VFieldHelper, "COUNTRY_CODES", {
         get: function () {
             return {
@@ -560,11 +558,12 @@ var VFieldHelper = /** @class */ (function () {
         });
         return ([['United States', 'US']]).concat(countries);
     };
-    VFieldHelper.labelize = function (string) {
-        return s.titleize(VFieldHelper.hintize(string));
+    VFieldHelper.labelize = function (str) {
+        return s.titleize(VFieldHelper.hintize(str));
     };
-    VFieldHelper.hintize = function (string) {
-        return s.capitalize(s.underscored((string || '').toString()).split(/\_|(\W)/).join(' ').replace(/\s+/g, ' '));
+    VFieldHelper.hintize = function (str) {
+        return s.capitalize(s.underscored((str || '').toString())
+            .split(/\_|(\W)/).join(' ').replace(/\s+/g, ' '));
     };
     VFieldHelper.fieldToLabel = function (str, label) {
         if (label === void 0) { label = true; }
@@ -572,11 +571,9 @@ var VFieldHelper = /** @class */ (function () {
         if ((/\_hashed\_/g).test(str)) {
             str = str.split(/\_hashed\_/g).slice(1).join('_hashed_');
         }
-        ;
         if ((/\_hashes$/g).test(str)) {
             str = pluralize(str.replace(/\_hashes$/g, ''));
         }
-        ;
         if ((/\_hashes\_summed\_/g).test(str)) {
             str = 'sum_of_' + pluralize(str.split(/\_hashes\_/)[0]) +
                 '_' + str.split(/\_hashes\_summed\_/).slice(1).join('_hashes_');
@@ -615,8 +612,11 @@ var VFieldHelper = /** @class */ (function () {
     VFieldHelper.buildGeneratedNames = function (input, changes, options) {
         options = _.defaults(options || {}, {});
         changes = _.defaults(changes || {}, {});
-        var name, label;
-        var terse_display_name, verbose_display_name = '', hint;
+        var name;
+        var label;
+        var terseDisplayName;
+        var verboseDisplayName = '';
+        var hint;
         name = v_tools_1.VTools.makeString(changes.input_name || input);
         if (options.question) {
             name = name.replace(/^(?:ha|i)s\_/g, '')
@@ -651,22 +651,22 @@ var VFieldHelper = /** @class */ (function () {
         }
         if (options.db_timestamp) {
             hint += ' (DB timestamp)';
-            verbose_display_name = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
+            verboseDisplayName = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
         }
-        terse_display_name = label;
+        terseDisplayName = label;
         if (options.percent) {
-            terse_display_name = terse_display_name.replace(/percentage/ig, '%');
+            terseDisplayName = terseDisplayName.replace(/percentage/ig, '%');
         }
         var generatedNames = {
             input_name: input.toString(),
             label: label,
             display_name: label,
-            terse_display_name: terse_display_name,
+            terse_display_name: terseDisplayName,
             hint: hint,
             required: false,
         };
-        if (verbose_display_name) {
-            generatedNames.verbose_display_name = verbose_display_name;
+        if (verboseDisplayName) {
+            generatedNames.verbose_display_name = verboseDisplayName;
         }
         return _.defaults(changes, generatedNames);
     };
@@ -1051,7 +1051,7 @@ var VFieldHelper = /** @class */ (function () {
         return _.defaults(changes || {}, VFieldHelper.buildBaseDatetimepicker((changes || { input_name: null }).input_name || 'datetimepicker'));
     };
     VFieldHelper.buildGeneratedDate = function (input, changes) {
-        var name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
+        // const name = ((changes || {}).input_name || input).toString().replace(/\_date/ig, '');
         return _.defaults(changes, VFieldHelper.buildBaseDatepicker(input.toString(), {
             // label: name === 'date' ? 'Date' : (VFieldHelper.fieldToLabel(name) + ' Date'),
             hint: 'Select the date',
@@ -1237,10 +1237,10 @@ var VFieldHelper = /** @class */ (function () {
             as: null,
         }).defaults(VFieldHelper.buildBase(input)).value();
     };
+    VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
     VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
     VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
     VFieldHelper.buildGeneratedPercThreshold = VFieldHelper.buildGeneratedPercentThreshold;
-    VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
     return VFieldHelper;
 }());
 exports.VFieldHelper = VFieldHelper;

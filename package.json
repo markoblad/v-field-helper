@@ -6,8 +6,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && uglifyjs dist/index.js --compress --mangle  > ./dist/index.min.js",
-    "test": "mocha --reporter spec",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec",
+    "lint": "npm run tslint \"lib/**/*.ts\"",
+    "test": "npm run lint && mocha --reporter spec",
+    "tslint": "tslint"
   },
   "repository": {
     "type": "git",
@@ -47,6 +49,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^4.1.0",
     "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-loader": "^3.5.3",
     "typescript": "^2.6.2",
     "uglify-js": "^3.3.7",
     "v-tools": "0.0.11"

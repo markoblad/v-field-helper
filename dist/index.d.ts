@@ -8,7 +8,7 @@ export interface VFieldInterface {
     hint?: string | null;
     more_info?: string | string[] | null;
     placeholder?: string | null;
-    security_types?: string | string[] | null;
+    security_types?: number[] | string | string[] | null;
     default_visible?: string | boolean | null;
     fill_approach?: string | null;
     dynamic_fill_approach_v_asset_types?: string[] | null;
@@ -33,6 +33,7 @@ export interface VFieldInterface {
     input_formatters?: string | string[] | null;
     js_formatters?: string | string[] | null;
     input_processor?: string | string[] | null;
+    input_processors?: string | string[] | null;
     dependency?: string | null;
     dependency_value?: string | null;
     dependencies?: string | string[] | null;
@@ -51,6 +52,10 @@ export interface VFieldSubTypeHash {
     textUnmask?: any;
 }
 export declare class VFieldHelper {
+    static buildGeneratedOrgType: typeof VFieldHelper.buildGeneratedACOrgType;
+    static buildBasePercThreshold: typeof VFieldHelper.buildBasePercentThreshold;
+    static buildPercThreshold: typeof VFieldHelper.buildPercentThreshold;
+    static buildGeneratedPercThreshold: typeof VFieldHelper.buildGeneratedPercentThreshold;
     static readonly positiveDecimalMask: any;
     static readonly positiveIntegerMask: any;
     static positiveIntegerUnmask(value?: string | number | null): number;
@@ -61,8 +66,8 @@ export declare class VFieldHelper {
     static readonly EDITABLE_V_FIELD_HELPER_ATTS: string[];
     static readonly COUNTRY_CODES: {};
     static countryCollection(): any[];
-    static labelize(string?: any): string;
-    static hintize(string?: any): string;
+    static labelize(str: any): string;
+    static hintize(str: any): string;
     static fieldToLabel(str: string, label?: boolean): string;
     static addDataAttsToFieldHelp(fieldHelp: VFieldInterface, dataAttsHash: {
         v_field_type?: string;
@@ -234,7 +239,6 @@ export declare class VFieldHelper {
         ng_filter: string;
         input_processors: string[];
     };
-    static buildBasePercThreshold: typeof VFieldHelper.buildBasePercentThreshold;
     static buildPercentThreshold(changes?: {}): VFieldInterface & {
         hint: string;
         field_type: string;
@@ -254,9 +258,7 @@ export declare class VFieldHelper {
         ng_filter: string;
         input_processors: string[];
     };
-    static buildPercThreshold: typeof VFieldHelper.buildPercentThreshold;
     static buildGeneratedPercentThreshold(input: string | number, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedPercThreshold: typeof VFieldHelper.buildGeneratedPercentThreshold;
     static buildBaseBoolean(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildBaseApplicability(input: string | number, changes?: VFieldInterface, options?: {}): VFieldInterface;
     static buildApplicability(changes?: VFieldInterface): VFieldInterface;
@@ -280,7 +282,6 @@ export declare class VFieldHelper {
     static buildBaseAcOrgType(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildAcOrgType(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedACOrgType(input: string | number, changes?: VFieldInterface): VFieldInterface;
-    static buildGeneratedOrgType: typeof VFieldHelper.buildGeneratedACOrgType;
     static buildBaseAcSecurityName(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildAcSecurityName(changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedAcSecurityName(input: string | number, changes?: VFieldInterface): VFieldInterface;
@@ -300,5 +301,4 @@ export declare class VFieldHelper {
     static buildBaseDbTimestamp(input: string, changes?: VFieldInterface): VFieldInterface;
     static buildDbTimestamp(changes?: VFieldInterface): VFieldInterface;
     static buildBaseSelect(input: string, changes?: VFieldInterface): VFieldInterface;
-    constructor();
 }

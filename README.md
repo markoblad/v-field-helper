@@ -13,18 +13,48 @@ bower install v-field-helper --save
 ```javascript
 var vfh = require('v-field-helper');
 VFieldHelper = vfh.VFieldHelper;
-var result = VFieldHelper.toRomanette(2);
+var result = VFieldHelper.buildBaseString('purchaser');
 ```
 ```sh
-Output should be 'ii'
+Output should be:
+  {
+    placeholder: 'Type value_',
+    custom_input_size: '4',
+    input_name: 'purchaser',
+    label: 'Purchaser',
+    display_name: 'Purchaser',
+    terse_display_name: 'Purchaser',
+    hint: 'Purchaser',
+    required: false,
+    editable: true,
+    as: 'string',
+    fill_approach: 'manual',
+    display: true,
+    default_visible: true,
+  }
 ```
 ### TypeScript
 ```typescript
 import { VFieldHelper } from 'v-field-helper';
-console.log(VFieldHelper.toRomanette(2))
+console.log(VFieldHelper.buildBaseString('purchaser'))
 ```
 ```sh
-Output should be 'ii'
+Output should be:
+  {
+    placeholder: 'Type value_',
+    custom_input_size: '4',
+    input_name: 'purchaser',
+    label: 'Purchaser',
+    display_name: 'Purchaser',
+    terse_display_name: 'Purchaser',
+    hint: 'Purchaser',
+    required: false,
+    editable: true,
+    as: 'string',
+    fill_approach: 'manual',
+    display: true,
+    default_visible: true,
+  }
 ```
 ### AMD
 ```javascript
