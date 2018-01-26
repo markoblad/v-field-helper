@@ -23,6 +23,7 @@ export interface VFieldInterface {
   manually_calculable?: string | boolean | null;
   step?: string | null;
   step_field_order?: string | null;
+  event?: string | null;
   as?: string | null;
   required?: string | boolean | null;
   input_html?: any | null;

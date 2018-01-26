@@ -17,6 +17,7 @@ export interface VFieldInterface {
     manually_calculable?: string | boolean | null;
     step?: string | null;
     step_field_order?: string | null;
+    event?: string | null;
     as?: string | null;
     required?: string | boolean | null;
     input_html?: any | null;
@@ -81,7 +82,7 @@ export declare class VFieldHelper {
         v_field_type?: string;
     }, options?: {}): VFieldInterface;
     static setAltDependencies(fieldHelp: VFieldInterface, altDependencies: any, altDependencyValues: any): VFieldInterface;
-    static buildGeneratedNames(input: string | number, changes?: VFieldInterface, options?: {
+    static buildGeneratedNames(input: string | number, changes?: VFieldInterface | null, options?: {
         question?: boolean;
         percent?: boolean;
         percent_threshold?: boolean;
