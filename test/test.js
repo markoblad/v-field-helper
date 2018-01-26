@@ -126,6 +126,7 @@ describe('VFieldHelper functions test', () => {
       VFieldHelper.buildGeneratedNames('purchaser_spouse', null, {question: true}),
       VFieldHelper.buildGeneratedNames('has_purchaser_spouse', null, {question: true}),
       VFieldHelper.buildGeneratedNames('is_purchaser_spouse', null, {question: true}),
+      VFieldHelper.buildGeneratedNames('purchaser', null, {event_type: 'acquisition'}),
     ];
     var expectation = [
       {
@@ -175,6 +176,15 @@ describe('VFieldHelper functions test', () => {
         terse_display_name: 'Purchaser Spouse?',
         hint: 'Purchaser spouse?',
         required: false
+      },
+      {
+        input_name: 'purchaser',
+        label: 'Purchaser',
+        display_name: 'Purchaser',
+        terse_display_name: 'Purchaser',
+        hint: 'Purchaser (acquisition)',
+        required: false,
+        verbose_display_name: 'Purchaser (Acquisition)',
       },
     ];
     expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));

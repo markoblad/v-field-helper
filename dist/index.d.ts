@@ -1,3 +1,4 @@
+import { VTools } from 'v-tools';
 export interface VFieldInterface {
     field_type?: string | null;
     display_name?: string | null;
@@ -58,6 +59,9 @@ export interface VFieldSubTypeHash {
     textUnmask?: any;
 }
 export declare class VFieldHelper {
+    static labelize: typeof VTools.labelize;
+    static hintize: typeof VTools.hintize;
+    static titleize: typeof VTools.titleize;
     static buildGeneratedOrgType: typeof VFieldHelper.buildGeneratedACOrgType;
     static buildBasePercThreshold: typeof VFieldHelper.buildBasePercentThreshold;
     static buildPercThreshold: typeof VFieldHelper.buildPercentThreshold;
@@ -72,8 +76,6 @@ export declare class VFieldHelper {
     static readonly EDITABLE_V_FIELD_HELPER_ATTS: string[];
     static readonly COUNTRY_CODES: {};
     static countryCollection(): any[];
-    static labelize(str: any): string;
-    static hintize(str: any): string;
     static fieldToLabel(str: string, label?: boolean): string;
     static addDataAttsToFieldHelp(fieldHelp: VFieldInterface, dataAttsHash: {
         v_field_type?: string;
@@ -87,6 +89,7 @@ export declare class VFieldHelper {
         v_sig?: boolean;
         db_key?: boolean;
         db_timestamp?: boolean;
+        event_type?: string;
     }): VFieldInterface;
     static buildGeneratedPercentNames(input: string | number, changes?: VFieldInterface): VFieldInterface;
     static buildGeneratedPercentThresholdNames(input: string | number, changes?: VFieldInterface): VFieldInterface;

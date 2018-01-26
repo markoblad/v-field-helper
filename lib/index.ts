@@ -68,6 +68,10 @@ export interface VFieldSubTypeHash {
 
 export class VFieldHelper {
 
+  public static labelize = VTools.labelize;
+  public static hintize = VTools.hintize;
+  public static titleize = VTools.titleize;
+
   public static buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
   public static buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
   public static buildPercThreshold = VFieldHelper.buildPercentThreshold;
@@ -634,17 +638,6 @@ export class VFieldHelper {
     return ([['United States', 'US']]).concat(countries);
   }
 
-  public static labelize(str: any): string {
-    return s.titleize(VFieldHelper.hintize(str));
-  }
-
-  public static hintize(str: any): string {
-    return s.capitalize(
-      s.underscored((str || '').toString())
-      .split(/\_|(\W)/).join(' ').replace(/\s+/g, ' ')
-    );
-  }
-
   public static fieldToLabel(str: string, label: boolean = true): string {
     str = (str || '').toString().toLowerCase();
     if ((/\_hashed\_/g).test(str)) { str = str.split(/\_hashed\_/g).slice(1).join('_hashed_'); }
@@ -696,7 +689,7 @@ export class VFieldHelper {
 
   public static buildGeneratedNames(
     input: string | number,
-    changes?: VFieldInterface,
+    changes?: VFieldInterface | null,
     options?: {
       question?: boolean,
       percent?: boolean,
@@ -705,6 +698,7 @@ export class VFieldHelper {
       v_sig?: boolean,
       db_key?: boolean,
       db_timestamp?: boolean,
+      event_type?: string,
     }
   ): VFieldInterface {
     options = _.defaults(options || {}, {});
@@ -749,6 +743,10 @@ export class VFieldHelper {
     if (options.db_timestamp) {
       hint += ' (DB timestamp)';
       verboseDisplayName = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
+    }
+    if (options.event_type) {
+      hint += ` (${options.event_type})`;
+      verboseDisplayName = label + ` (${VFieldHelper.labelize(options.event_type)})`;
     }
     terseDisplayName = label;
     if (options.percent) {

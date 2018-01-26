@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
-var s = require("underscore.string");
 var pluralize = require("pluralize");
 var v_tools_1 = require("v-tools");
 var createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
@@ -568,13 +567,6 @@ var VFieldHelper = /** @class */ (function () {
         });
         return ([['United States', 'US']]).concat(countries);
     };
-    VFieldHelper.labelize = function (str) {
-        return s.titleize(VFieldHelper.hintize(str));
-    };
-    VFieldHelper.hintize = function (str) {
-        return s.capitalize(s.underscored((str || '').toString())
-            .split(/\_|(\W)/).join(' ').replace(/\s+/g, ' '));
-    };
     VFieldHelper.fieldToLabel = function (str, label) {
         if (label === void 0) { label = true; }
         str = (str || '').toString().toLowerCase();
@@ -662,6 +654,10 @@ var VFieldHelper = /** @class */ (function () {
         if (options.db_timestamp) {
             hint += ' (DB timestamp)';
             verboseDisplayName = 'Entry ' + (input === 'updated_at' ? 'Last ' : '') + label;
+        }
+        if (options.event_type) {
+            hint += " (" + options.event_type + ")";
+            verboseDisplayName = label + (" (" + VFieldHelper.labelize(options.event_type) + ")");
         }
         terseDisplayName = label;
         if (options.percent) {
@@ -1247,6 +1243,9 @@ var VFieldHelper = /** @class */ (function () {
             as: null,
         }).defaults(VFieldHelper.buildBase(input)).value();
     };
+    VFieldHelper.labelize = v_tools_1.VTools.labelize;
+    VFieldHelper.hintize = v_tools_1.VTools.hintize;
+    VFieldHelper.titleize = v_tools_1.VTools.titleize;
     VFieldHelper.buildGeneratedOrgType = VFieldHelper.buildGeneratedACOrgType;
     VFieldHelper.buildBasePercThreshold = VFieldHelper.buildBasePercentThreshold;
     VFieldHelper.buildPercThreshold = VFieldHelper.buildPercentThreshold;
