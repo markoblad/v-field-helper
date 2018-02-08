@@ -16,7 +16,7 @@ export interface VFieldInterface {
     api_maps?: string | string[] | null;
     manually_calculable?: string | boolean | null;
     step?: string | null;
-    step_field_order?: string | null;
+    step_field_order?: number | string | null;
     event?: string | null;
     as?: string | null;
     required?: string | boolean | null;
