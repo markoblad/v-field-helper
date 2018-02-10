@@ -48,6 +48,7 @@ export interface VFieldInterface {
     insert_id?: boolean | null;
     readonlyDefault?: boolean | null;
     optional_input?: boolean | null;
+    notes?: string | string[] | any[] | null;
 }
 export interface VFieldSubTypeHash {
     vInputType: string;
