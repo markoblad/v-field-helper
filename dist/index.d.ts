@@ -40,8 +40,8 @@ export interface VFieldInterface {
     dependency_value?: string | number | boolean | null;
     dependencies?: string | string[] | null;
     dependency_values?: any | any[] | null;
-    alt_dependencies?: string | string[] | null;
-    alt_dependency_values?: any | any[] | null;
+    alt_dependencies?: any[][] | string | string[] | null;
+    alt_dependency_values?: any[][] | any | any[] | null;
     source_path?: any;
     general_search_ac_name_att?: string | null;
     template_package?: string | null;
