@@ -1,6 +1,6 @@
 {
   "name": "v-field-helper",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "interface and helpers for data inputs and json structures",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
