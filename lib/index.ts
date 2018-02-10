@@ -43,7 +43,7 @@ export interface VFieldInterface {
   input_processor?: string | string[] | null;
   input_processors?: string | string[] | null;
   dependency?: string | null;
-  dependency_value?: string | null;
+  dependency_value?: string | number | boolean | null;
   dependencies?: string | string[] | null;
   dependency_values?: any | any[] | null;
   alt_dependencies?: string | string[] | null;
