@@ -32,6 +32,7 @@ export interface VFieldInterface {
   sum_type?: string | null;
   type_cast?: string | null;
   readonly_v_asset_types?: string[] | null;
+  disabled?: boolean | string | null;
   adjusted?: string | boolean | null;
   editable?: string | boolean | null;
   display?: string | boolean | null;
