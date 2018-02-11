@@ -7,6 +7,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 export interface VFieldInterface {
   field_type?: string | null;
+  virtual_type?: string | null;
   display_name?: string | null;
   verbose_display_name?: string | null;
   terse_display_name?: string | null;
