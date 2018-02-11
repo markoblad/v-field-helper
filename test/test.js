@@ -13,15 +13,15 @@ describe('VFieldHelper functions test', () => {
   // });
   it('should get positiveDecimalMask', () => {
     var result = VFieldHelper.positiveDecimalMask();
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')])); // TODO: check this for decimals
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines([RegExp('\\d')])); // TODO: check this for decimals
   });
   it('should get positiveDecimalMask', () => {
     var result = VFieldHelper.positiveDecimalMask();
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')])); // TODO: check this for decimals
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines([RegExp('\\d')])); // TODO: check this for decimals
   });
   it('should get positiveIntegerMask', () => {
     var result = VFieldHelper.positiveIntegerMask();
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines([RegExp('\\d')]));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines([RegExp('\\d')]));
   });
 
   it('should get positiveIntegerUnmask', () => {
@@ -34,7 +34,7 @@ describe('VFieldHelper functions test', () => {
   });
   it('should get V_FIELD_TYPES', () => {
     var result = VFieldHelper.V_FIELD_TYPES.basic_input;
-    expect(VTools.hashes_to_lines([result])).to.equal(VTools.hashes_to_lines([{
+    expect(VTools.hashesToLines([result])).to.equal(VTools.hashesToLines([{
       vInputType: 'vInput',
       label: 'Basic Input',
       hint: 'Basic Input',
@@ -99,7 +99,7 @@ describe('VFieldHelper functions test', () => {
       {some_att: 'not_empty'},
       {some_other_att: 'not_empty', some_att: 'empty'},
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return setAltDependencies for various', () => {
     var result = [
@@ -116,7 +116,7 @@ describe('VFieldHelper functions test', () => {
       [true, 'value'],
       'isDependent',
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedNames for various', () => {
     var result = [
@@ -187,7 +187,7 @@ describe('VFieldHelper functions test', () => {
         verbose_display_name: 'Purchaser (Acquisition)',
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPercentNames for various', () => {
     var result = [
@@ -212,7 +212,7 @@ describe('VFieldHelper functions test', () => {
         required: false
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPercentThresholdNames for various', () => {
     var result = [
@@ -237,7 +237,7 @@ describe('VFieldHelper functions test', () => {
         required: false
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildBase for various', () => {
@@ -259,7 +259,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseString for various', () => {
     var result = [
@@ -282,7 +282,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildString for various', () => {
     var result = [
@@ -305,7 +305,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedString for various', () => {
     var result = [
@@ -328,7 +328,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseTextarea for various', () => {
     var result = [
@@ -355,7 +355,7 @@ describe('VFieldHelper functions test', () => {
         display: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildTextarea', () => {
     var result = [
@@ -382,7 +382,7 @@ describe('VFieldHelper functions test', () => {
         display: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedTextarea', () => {
     var result = [
@@ -409,7 +409,7 @@ describe('VFieldHelper functions test', () => {
         display: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePositiveInteger', () => {
     var result = [
@@ -443,7 +443,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildPositiveInteger', () => {
@@ -478,7 +478,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPositiveInteger', () => {
     var result = [
@@ -511,7 +511,7 @@ describe('VFieldHelper functions test', () => {
         display: true,
         default_visible: true,      },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildBasePositiveVariableInteger', () => {
@@ -546,7 +546,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePositiveDecimal', () => {
     var result = [
@@ -581,7 +581,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildPositiveDecimal', () => {
@@ -617,7 +617,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPositiveDecimal', () => {
     var result = [
@@ -652,7 +652,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDollarInteger', () => {
     var result = [
@@ -687,7 +687,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDollarInteger', () => {
     var result = [
@@ -722,7 +722,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildGeneratedDollarInteger', () => {
@@ -758,7 +758,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDollarDecimal', () => {
     var result = [
@@ -793,7 +793,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePreciseDollarDecimal', () => {
     var result = [
@@ -828,7 +828,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDollarDecimal', () => {
     var result = [
@@ -863,7 +863,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedDollarDecimal', () => {
     var result = [
@@ -898,7 +898,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePercent', () => {
     var result = [
@@ -933,7 +933,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildPercent', () => {
     var result = [
@@ -968,7 +968,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPercent', () => {
     var result = [
@@ -1003,7 +1003,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildBaseDecimalPercent', () => {
@@ -1042,7 +1042,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDecimalPercent', () => {
     var result = [
@@ -1080,7 +1080,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildCalculatedDecimalPercent', () => {
     var result = [
@@ -1120,7 +1120,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePercentThreshold', () => {
     var result = [
@@ -1157,7 +1157,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePercentThreshold', () => {
     var result = [
@@ -1194,7 +1194,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePercThreshold', () => {
     var result = [
@@ -1240,7 +1240,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildPercentThreshold', () => {
     var result = [
@@ -1286,7 +1286,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPercThreshold', () => {
     var result = [
@@ -1326,7 +1326,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseApplicability for various', () => {
     var result = [
@@ -1358,7 +1358,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });  
   it('should return buildApplicability for various', () => {
     var result = [
@@ -1390,7 +1390,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedApplicability for various', () => {
     var result = [
@@ -1422,7 +1422,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildYesCheckbox for various', () => {
     var result = [
@@ -1454,7 +1454,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBooleanFetchedInput for various', () => {
     var result = [
@@ -1493,7 +1493,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildFormCopy for various', () => {
     var result = [
@@ -1527,7 +1527,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildAnnotatedCopy for various', () => {
     var result = [
@@ -1560,7 +1560,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDatepicker for various', () => {
     var result = [
@@ -1595,7 +1595,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedDate for various', () => {
     var result = [
@@ -1630,7 +1630,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDatepicker for various', () => {
     var result = [
@@ -1665,7 +1665,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDatetimepicker for various', () => {
     var result = [
@@ -1700,7 +1700,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDatetimepicker for various', () => {
     var result = [
@@ -1735,7 +1735,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseOrgState for various', () => {
     var result = [
@@ -1763,7 +1763,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildOrgState for various', () => {
     var result = [
@@ -1793,7 +1793,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedOrgState for various', () => {
     var result = [
@@ -1821,7 +1821,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseAcState for various', () => {
     var result = [
@@ -1851,7 +1851,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildAcState for various', () => {
     var result = [
@@ -1881,7 +1881,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedAcState for various', () => {
     var result = [
@@ -1911,7 +1911,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildBaseAcOrgType for various', () => {
@@ -1941,7 +1941,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildAcOrgType for various', () => {
@@ -1971,7 +1971,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
   it('should return buildGeneratedACOrgType for various', () => {
@@ -2001,7 +2001,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedOrgType', () => {
     var result = [
@@ -2036,7 +2036,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildAcSecurityName for various', () => {
     var result = [
@@ -2062,7 +2062,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedAcSecurityName for various', () => {
     var result = [
@@ -2088,7 +2088,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBasePeriodType for various', () => {
     var result = [
@@ -2117,7 +2117,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildPeriodType for various', () => {
     var result = [
@@ -2146,7 +2146,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedPeriodType for various', () => {
     var result = [
@@ -2175,7 +2175,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedVSig for various', () => {
     var result = [
@@ -2197,7 +2197,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseObjectHashes for various', () => {
     var result = [
@@ -2223,7 +2223,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildObjectHashes for various', () => {
     var result = [
@@ -2249,7 +2249,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedObjectHashes for various', () => {
     var result = [
@@ -2275,7 +2275,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseVirtualModelHashes for various', () => {
     var result = [
@@ -2300,7 +2300,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildVirtualModelHashes for various', () => {
     var result = [
@@ -2325,7 +2325,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildGeneratedVirtualModelHashes for various', () => {
     var result = [
@@ -2350,7 +2350,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildHashesSummedBase for various', () => {
     var result = [
@@ -2371,7 +2371,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDbKey for various', () => {
     var result = [
@@ -2395,7 +2395,7 @@ describe('VFieldHelper functions test', () => {
         as: 'string',
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDbKey for various', () => {
     var result = [
@@ -2419,7 +2419,7 @@ describe('VFieldHelper functions test', () => {
         as: 'string',
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseDbTimestamp for various', () => {
     var result = [
@@ -2443,7 +2443,7 @@ describe('VFieldHelper functions test', () => {
         as: 'string',
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildDbTimestamp for various', () => {
     var result = [
@@ -2467,7 +2467,7 @@ describe('VFieldHelper functions test', () => {
         as: 'string',
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
   it('should return buildBaseSelect for various', () => {
     var result = [
@@ -2489,7 +2489,7 @@ describe('VFieldHelper functions test', () => {
         default_visible: true,
       },
     ];
-    expect(VTools.hashes_to_lines(result)).to.equal(VTools.hashes_to_lines(expectation));
+    expect(VTools.hashesToLines(result)).to.equal(VTools.hashesToLines(expectation));
   });
 
 });
