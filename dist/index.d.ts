@@ -24,6 +24,7 @@ export interface VFieldInterface {
     other_input_options?: any | null;
     custom_input_size?: string | number | null;
     sum_type?: string | null;
+    type_cast?: string | null;
     readonly_v_asset_types?: string[] | null;
     adjusted?: string | boolean | null;
     editable?: string | boolean | null;
