@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var pluralize = require("pluralize");
+var v_utilities_1 = require("v-utilities");
 var v_tools_1 = require("v-tools");
 var createNumberMask_1 = require("text-mask-addons/dist/createNumberMask");
 var VFieldHelper = /** @class */ (function () {
@@ -584,7 +585,7 @@ var VFieldHelper = /** @class */ (function () {
     };
     VFieldHelper.addDataAttsToFieldHelp = function (fieldHelp, dataAttsHash, options) {
         options = _.defaults(options || {}, {});
-        if (v_tools_1.VTools.isObject(dataAttsHash) && v_tools_1.VTools.isObject(fieldHelp)) {
+        if (v_utilities_1.VUtilities.isObject(dataAttsHash) && v_utilities_1.VUtilities.isObject(fieldHelp)) {
             var inputHTML = fieldHelp.input_html || {};
             var inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
             inputHTML.data = inputHTMLData;
@@ -619,7 +620,7 @@ var VFieldHelper = /** @class */ (function () {
         var terseDisplayName;
         var verboseDisplayName = '';
         var hint;
-        name = v_tools_1.VTools.makeString(changes.input_name || input);
+        name = v_utilities_1.VUtilities.makeString(changes.input_name || input);
         if (options.question) {
             name = name.replace(/^(?:ha|i)s\_/g, '')
                 .replace(/\_else\_applicability/ig, '')
@@ -971,7 +972,7 @@ var VFieldHelper = /** @class */ (function () {
         }).defaults(VFieldHelper.buildBaseBoolean('yes_checkbox')).value();
     };
     VFieldHelper.buildBooleanFetchedInput = function (input, dependency, changes) {
-        dependency = ((v_tools_1.VTools.isBlank(dependency) || input === dependency) ? null : dependency);
+        dependency = ((v_utilities_1.VUtilities.isBlank(dependency) || input === dependency) ? null : dependency);
         var fieldHelp = _.chain(changes || {}).defaults({
             fill_approach: 'dynamic',
             editable: false,

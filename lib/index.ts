@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as s from 'underscore.string';
 import * as pluralize from 'pluralize';
 import * as moment from 'moment';
+import { VUtilities } from 'v-utilities';
 import { VTools } from 'v-tools';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
@@ -660,7 +661,7 @@ export class VFieldHelper {
     options?: {}
   ): VFieldInterface {
     options = _.defaults(options || {}, {});
-    if (VTools.isObject(dataAttsHash) && VTools.isObject(fieldHelp)) {
+    if (VUtilities.isObject(dataAttsHash) && VUtilities.isObject(fieldHelp)) {
       const inputHTML: {data?: {}} = fieldHelp.input_html || {};
       const inputHTMLData = _.defaults(dataAttsHash, inputHTML.data || {});
       inputHTML.data = inputHTMLData;
@@ -713,7 +714,7 @@ export class VFieldHelper {
     let terseDisplayName: string;
     let verboseDisplayName: string = '';
     let hint: string;
-    name = VTools.makeString(changes.input_name || input);
+    name = VUtilities.makeString(changes.input_name || input);
     if (options.question) {
       name = name.replace(/^(?:ha|i)s\_/g, '')
       .replace(/\_else\_applicability/ig, '')
@@ -1188,7 +1189,7 @@ export class VFieldHelper {
     input: string | number,
     dependency?: string | number | null,
     changes?: VFieldInterface): VFieldInterface {
-    dependency = ((VTools.isBlank(dependency) || input === dependency) ? null : dependency);
+    dependency = ((VUtilities.isBlank(dependency) || input === dependency) ? null : dependency);
     let fieldHelp: VFieldInterface = _.chain(changes || {}).defaults({
       fill_approach: 'dynamic',
       editable: false,
